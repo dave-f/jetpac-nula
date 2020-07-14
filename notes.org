@@ -1,0 +1,12 @@
+* graphics
+** rocket part 1
+** rocket part 2
+** rocket part 3
+** platform
+*** 3 pieces of 8x8 in bbc micro format
+*** file: jet-pac, offset ?
+** player
+** fuel pod
+** aliens
+* colours
+** colour 15 used for laser
