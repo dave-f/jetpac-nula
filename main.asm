@@ -11,5 +11,7 @@ GUARD &A00
 
 .END:
     PRINT "Bytes used: ",END-START
-    PUTFILE "README.md","README",1900
-    SAVE  "DAVE",START,END
+    PUTFILE "org/jet-ldr","jet-ldr",&1900,&8023
+    PUTFILE "org/jetpac","jetpac",&5C00,&6000
+    PUTFILE "org/jet-pac","jet-pac",&2000,&5900
+    SAVE "test",START,END

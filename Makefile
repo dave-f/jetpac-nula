@@ -3,9 +3,11 @@
 #
 
 BEEBEM       := C:/Dave/b2/b2_Debug
+PNG2BBC      := ../png2bbc/Release/png2bbc.exe
+SNAP         := ../snap/Release/snap.exe
 BEEBEM_FLAGS := -0
 BEEBASM      := ../../hg/beebasm/beebasm.exe
-GAME_SSD     := Disc007-JetPac.ssd
+GAME_SSD     := res/blank.ssd
 OUTPUT_SSD   := jetpac-nula.ssd
 MAIN_ASM     := main.asm
 RM           := del
