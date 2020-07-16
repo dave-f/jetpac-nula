@@ -1,0 +1,9 @@
+;
+; Jetpac graphics script for png2bbc
+; 16/07/2020
+
+IMAGE res/sheet.png
+MODE 2
+COLOURS BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE
+CREATE-FILE platform.bin FROM-DATA 0 128 8 8 3 DATA-ORDER BLOCK
+
