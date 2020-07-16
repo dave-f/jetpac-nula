@@ -4,7 +4,7 @@
 ** rocket part 3
 ** platform
 *** 3 pieces of 8x8 in bbc micro format
-*** file: jet-pac, offset ?
+*** file: jet-pac, offset 7680, 3 blocks of 8x8
 ** player
 ** fuel pod
 ** aliens

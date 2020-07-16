@@ -21,6 +21,10 @@ all: $(OUTPUT_SSD)
 $(OUTPUT_SSD): $(MAIN_ASM) Makefile
 	$(BEEBASM) -i $(MAIN_ASM) -di $(GAME_SSD) -do $(OUTPUT_SSD)
 
+gfx:
+	$(PNG2BBC) gfxscript
+	$(SNAP) org/jet-pac platform.bin 7680
+
 clean:
 	$(RM) $(OUTPUT_SSD)
 
