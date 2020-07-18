@@ -7,7 +7,7 @@
 
 ;; Remap items
 (defun handle-item-graphic()
-  "Repack the item graphics, they are expected upside down"
+  "Repack the item graphics"
   (interactive)
   (let* ((bytes (string-to-list (f-read-bytes "pickup1.bin")))
          (new-bytes (reverse bytes)))
@@ -19,6 +19,20 @@
   (let* ((bytes (string-to-list (f-read-bytes "fuel.bin")))
          (new-bytes (reverse bytes)))
     (f-write-bytes (apply 'unibyte-string new-bytes) "fuel.bbc")))
+
+(defun handle-player-graphic()
+  "Repack the player"
+  (interactive)
+  (let* ((bytes (string-to-list (f-read-bytes "mantop.bin")))
+         (new-bytes (reverse bytes)))
+    (f-write-bytes (apply 'unibyte-string new-bytes) "mantop.bbc")))
+
+(defun handle-player-bottom-graphic()
+  "Repack the player"
+  (interactive)
+  (let* ((bytes (string-to-list (f-read-bytes "manbot.bin")))
+         (new-bytes (reverse bytes)))
+    (f-write-bytes (apply 'unibyte-string new-bytes) "manbot.bbc")))
 
 
 ;    (cl-loop for s from 0 to (* 47 4 8) by (* 8 4) do ; screen offset

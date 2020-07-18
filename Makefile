@@ -30,9 +30,12 @@ gfx:
 	$(PNG2BBC) gfxscript
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-item-graphic)"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-fuel-graphic)"
-	$(SNAP) org/jet-pac platform.bin 7680
-	$(SNAP) org/jet-pac pickup1.bbc 512
-	$(SNAP) org/jet-pac fuel.bbc 1152
+#	$(SNAP) org/jet-pac platform.bin 7680
+#	$(SNAP) org/jet-pac pickup1.bbc 512
+#	$(SNAP) org/jet-pac fuel.bbc 1152
+	$(SNAP) org/jet-pac mantop.bin 11520
+#   $(SNAP) org/jet-pac manbot.bin 1280
+#	$(SNAP) org/jet-pac flame.bbc 11776
 
 clean:
 	$(RM) $(OUTPUT_SSD)
