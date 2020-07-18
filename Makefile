@@ -36,6 +36,7 @@ gfx:
 	$(SNAP) org/jet-pac mantop.bin 11520
 #   $(SNAP) org/jet-pac manbot.bin 1280
 #	$(SNAP) org/jet-pac flame.bbc 11776
+#   $(SNAP) org/jet-pac aliens.bin 12544
 
 clean:
 	$(RM) $(OUTPUT_SSD)
