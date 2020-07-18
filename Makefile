@@ -33,10 +33,12 @@ gfx:
 #	$(SNAP) org/jet-pac platform.bin 7680
 #	$(SNAP) org/jet-pac pickup1.bbc 512
 #	$(SNAP) org/jet-pac fuel.bbc 1152
-	$(SNAP) org/jet-pac mantop.bin 11520
+#	$(SNAP) org/jet-pac mantop.bin 11520
 #   $(SNAP) org/jet-pac manbot.bin 1280
 #	$(SNAP) org/jet-pac flame.bbc 11776
 #   $(SNAP) org/jet-pac aliens.bin 12544
+#   $(SNAP) org/jet-pac tribble.bin 11416
+	$(SNAP) org/jet-pac rocket.bin 13568
 
 clean:
 	$(RM) $(OUTPUT_SSD)
