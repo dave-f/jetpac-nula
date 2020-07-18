@@ -2,11 +2,23 @@
 ** rocket part 1
 ** rocket part 2
 ** rocket part 3
+** pickups
+*** offset 512,16x12
+*** offset 608,16x12
+*** offset 704,16x12
+*** offset 800,16x12
+*** offset 896,16x12
 ** platform
 *** 3 pieces of 8x8 in bbc micro format
 *** file: jet-pac, offset 7680, 3 blocks of 8x8
-** player
-** fuel pod
+** player (needs to be reversed, use N in graphics ripper)
+*** offset 11528, 2 16x16 blocks
+** fuel pod (needs to be reversed, use N in graphics ripper)
+*** 2 pieces of 8x8 (?), offset 1152
+** flame
+*** 2 pieces of 16x16, offset 11768
+** explosion? (reversed)
+*** 8 frames of 16x16, offset 12544
 ** aliens
 * colours
 ** colour 15 used for laser
