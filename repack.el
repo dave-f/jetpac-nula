@@ -13,6 +13,13 @@
          (new-bytes (reverse bytes)))
     (f-write-bytes (apply 'unibyte-string new-bytes) "pickup1.bbc")))
 
+(defun handle-fuel-graphic()
+  "Repack the fuel"
+  (interactive)
+  (let* ((bytes (string-to-list (f-read-bytes "fuel.bin")))
+         (new-bytes (reverse bytes)))
+    (f-write-bytes (apply 'unibyte-string new-bytes) "fuel.bbc")))
+
 
 ;    (cl-loop for s from 0 to (* 47 4 8) by (* 8 4) do ; screen offset
 ;             (cl-loop for i from 0 to 3 do ; enemy within screen

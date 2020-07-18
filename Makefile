@@ -19,28 +19,20 @@ GFX_OBJECTS := $(shell $(PNG2BBC) -l gfxscript)
 
 #
 # Phony targets
-.PHONY: all clean run
+.PHONY: all clean run gfx
 
 all: $(OUTPUT_SSD)
 
 $(OUTPUT_SSD): $(MAIN_ASM) Makefile
 	$(BEEBASM) -i $(MAIN_ASM) -di $(GAME_SSD) -do $(OUTPUT_SSD)
 
-
-#$(GFX_OBJECTS): gfxscript res/sheet.png
-#	$(PNG2BBC) gfxscript
-#   not sure this offset is correct
-#	$(SNAP) org/jet-pac fuel.bin 1184
-#	$(SNAP) org/jet-pac platform.bin 7680
-#	$(SNAP) org/jet-pac pickup1.bbc 512
-
 gfx:
 	$(PNG2BBC) gfxscript
-#   not sure this offset is correct
-#	$(SNAP) org/jet-pac fuel.bin 1184
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-item-graphic)"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-fuel-graphic)"
 	$(SNAP) org/jet-pac platform.bin 7680
 	$(SNAP) org/jet-pac pickup1.bbc 512
+	$(SNAP) org/jet-pac fuel.bbc 1152
 
 clean:
 	$(RM) $(OUTPUT_SSD)
