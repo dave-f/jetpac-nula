@@ -24,7 +24,7 @@ GFX_OBJECTS := $(shell $(PNG2BBC) -l gfxscript)
 all: $(OUTPUT_SSD)
 
 $(OUTPUT_SSD): $(MAIN_ASM) Makefile
-	$(BEEBASM) -i $(MAIN_ASM) -di $(GAME_SSD) -do $(OUTPUT_SSD)
+	$(BEEBASM) -i $(MAIN_ASM) -boot jet-pac -di $(GAME_SSD) -do $(OUTPUT_SSD)
 
 gfx:
 	$(PNG2BBC) gfxscript
@@ -38,7 +38,7 @@ gfx:
 #	$(SNAP) org/jet-pac flame.bbc 11776
 #   $(SNAP) org/jet-pac aliens.bin 12544
 #   $(SNAP) org/jet-pac tribble.bin 11416
-	$(SNAP) org/jet-pac rocket.bin 13568
+#	$(SNAP) org/jet-pac rocket.bin 13576
 
 clean:
 	$(RM) $(OUTPUT_SSD)
