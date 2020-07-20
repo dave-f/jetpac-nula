@@ -36,4 +36,5 @@ GUARD &A00
     PUTFILE "org/jet-pac","jet-pac",&2000,&5900
     PUTFILE "player1.bin", "player1",&3000,&3000
     PUTFILE "player2.bin", "player2",&3280,&3280
+    PUTFILE "player3.bin", "player3",&3500,&3500
     SAVE "test",START,END
