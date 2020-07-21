@@ -20,5 +20,7 @@
 ** explosion? (reversed)
 *** 8 frames of 16x16, offset 12544
 ** aliens
+*** offset 12044, unsure of format yet
+*** offset 12416, 16x16 in 2bpp mode, reverse - shows the graphic clearly
 * colours
 ** colour 15 used for laser
