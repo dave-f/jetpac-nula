@@ -27,15 +27,15 @@ $(OUTPUT_SSD): $(MAIN_ASM) bin/pal.bin Makefile
 	$(BEEBASM) -i $(MAIN_ASM) -boot jet-pac -di $(GAME_SSD) -do $(OUTPUT_SSD)
 
 gfx:
-#	$(PNG2BBC) gfxscript
-	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-item-graphic)"
+	$(PNG2BBC) gfxscript
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-item-graphic)"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-fuel-graphic)"
-	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-player-graphic)"
-	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-player-bottom-graphic)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-player-graphic)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-player-bottom-graphic)"
 #	$(SNAP) org/jet-pac test8x12.bin 12044
 #	$(SNAP) org/jet-pac platform.bin 7680
 #	$(SNAP) org/jet-pac pickup1.bbc 512
-	$(SNAP) org/jet-pac fuel.bbc 1152
+#	$(SNAP) org/jet-pac bin/fuel.bbc 1152
 #	$(SNAP) org/jet-pac mantop.bbc 11520
 #	$(SNAP) org/jet-pac manbot.bbc 1472
 #	$(SNAP) org/jet-pac flame.bbc 11776
@@ -45,7 +45,7 @@ gfx:
 
 clean:
 	$(RM) $(OUTPUT_SSD)
-	$(RM) $(GFX_OBJECTS)
+	$(RM) bin\*.*
 
 run:
 	$(BEEBEM) $(BEEBEM_FLAGS) $(OUTPUT_SSD)

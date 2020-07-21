@@ -9,30 +9,30 @@
 (defun handle-item-graphic()
   "Repack the item graphics"
   (interactive)
-  (let* ((bytes (string-to-list (f-read-bytes "pickup1.bin")))
+  (let* ((bytes (string-to-list (f-read-bytes "bin/pickup1.bin")))
          (new-bytes (reverse bytes)))
-    (f-write-bytes (apply 'unibyte-string new-bytes) "pickup1.bbc")))
+    (f-write-bytes (apply 'unibyte-string new-bytes) "bin/pickup1.bbc")))
 
 (defun handle-fuel-graphic()
   "Repack the fuel"
   (interactive)
-  (let* ((bytes (string-to-list (f-read-bytes "fuel.bin")))
+  (let* ((bytes (string-to-list (f-read-bytes "bin/fuel.bin")))
          (new-bytes (reverse bytes)))
-    (f-write-bytes (apply 'unibyte-string new-bytes) "fuel.bbc")))
+    (f-write-bytes (apply 'unibyte-string new-bytes) "bin/fuel.bbc")))
 
 (defun handle-player-graphic()
   "Repack the player"
   (interactive)
-  (let* ((bytes (string-to-list (f-read-bytes "mantop.bin")))
+  (let* ((bytes (string-to-list (f-read-bytes "bin/mantop.bin")))
          (new-bytes (reverse bytes)))
-    (f-write-bytes (apply 'unibyte-string new-bytes) "mantop.bbc")))
+    (f-write-bytes (apply 'unibyte-string new-bytes) "bin/mantop.bbc")))
 
 (defun handle-player-bottom-graphic()
   "Repack the player"
   (interactive)
-  (let* ((bytes (string-to-list (f-read-bytes "manbot.bin")))
+  (let* ((bytes (string-to-list (f-read-bytes "bin/manbot.bin")))
          (new-bytes (reverse bytes)))
-    (f-write-bytes (apply 'unibyte-string new-bytes) "manbot.bbc")))
+    (f-write-bytes (apply 'unibyte-string new-bytes) "bin/manbot.bbc")))
 
 
 ;    (cl-loop for s from 0 to (* 47 4 8) by (* 8 4) do ; screen offset

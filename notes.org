@@ -1,7 +1,5 @@
 * graphics
-** rocket part 1
-** rocket part 2
-** rocket part 3
+** rocket parts
 ** pickups
 *** offset 512,16x12
 *** offset 608,16x12
@@ -24,3 +22,9 @@
 *** offset 12416, 16x16 in 2bpp mode, reverse - shows the graphic clearly
 * colours
 ** colour 15 used for laser
+* disassembly
+** 0x04b9 LDA #$AA ; CONTINUE GAME, Y/N?
+** $170c key routine - scan for a particular key ($aa then $bb)
+** $04af when Y pressed
+** $04c0 when N pressed
+** $17f8 - game start (only when playing)
