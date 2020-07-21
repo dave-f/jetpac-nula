@@ -22,8 +22,9 @@ GUARD &A00
     LDA PAL,X
     STA &FE23
     INX
-    CPX #32
+    CPX #30
     BNE PROGRAM_PAL
+    STA &70
     RTS
 
 .PAL:

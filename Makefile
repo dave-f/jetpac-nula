@@ -23,7 +23,7 @@ GFX_OBJECTS := $(shell $(PNG2BBC) -l gfxscript)
 
 all: $(OUTPUT_SSD)
 
-$(OUTPUT_SSD): $(MAIN_ASM) Makefile
+$(OUTPUT_SSD): $(MAIN_ASM) bin/pal.bin Makefile
 	$(BEEBASM) -i $(MAIN_ASM) -boot jet-pac -di $(GAME_SSD) -do $(OUTPUT_SSD)
 
 gfx:
@@ -32,11 +32,12 @@ gfx:
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-fuel-graphic)"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-player-graphic)"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-player-bottom-graphic)"
+#	$(SNAP) org/jet-pac test8x12.bin 12044
 #	$(SNAP) org/jet-pac platform.bin 7680
 #	$(SNAP) org/jet-pac pickup1.bbc 512
-#	$(SNAP) org/jet-pac fuel.bbc 1152
-	$(SNAP) org/jet-pac mantop.bbc 11520
-	$(SNAP) org/jet-pac manbot.bbc 1472
+	$(SNAP) org/jet-pac fuel.bbc 1152
+#	$(SNAP) org/jet-pac mantop.bbc 11520
+#	$(SNAP) org/jet-pac manbot.bbc 1472
 #	$(SNAP) org/jet-pac flame.bbc 11776
 #   $(SNAP) org/jet-pac aliens.bin 12544
 #   $(SNAP) org/jet-pac tribble.bin 11416
