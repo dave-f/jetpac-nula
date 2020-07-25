@@ -4,7 +4,7 @@
 
 BEEBEM       := C:/Dave/b2/b2_Debug
 PNG2BBC      := ../png2bbc/Release/png2bbc.exe
-EMACS        := c:/Emacs/emacs-27.1/bin/emacs.exe
+EMACS        := c:/Dave/Emacs-27.1/bin/emacs.exe
 SNAP         := ../snap/Release/snap.exe
 BEEBEM_FLAGS := -b -0
 BEEBASM      := ../beebasm/beebasm.exe
@@ -31,15 +31,13 @@ $(GFX_OBJECTS): gfxscript
 
 gfx:
 	$(PNG2BBC) gfxscript
-#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-item-graphic)"
-	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-fuel-graphic)"
-#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-player-graphic)"
-#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(handle-player-bottom-graphic)"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/fuel.bin\" \"bin/fuel.bbc\"")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/mantop.bin\" \"bin/mantop.bbc\"")"
 #	$(SNAP) org/jet-pac test8x12.bin 12044
 #	$(SNAP) org/jet-pac platform.bin 7680
 #	$(SNAP) org/jet-pac pickup1.bbc 512
-#	$(SNAP) org/jet-pac bin/fuel.bbc 1152
-#	$(SNAP) org/jet-pac mantop.bbc 11520
+	$(SNAP) org/jet-pac bin/fuel.bbc 1152
+	$(SNAP) org/jet-pac bin/mantop.bbc 11520
 #	$(SNAP) org/jet-pac manbot.bbc 1472
 #	$(SNAP) org/jet-pac flame.bbc 11776
 #   $(SNAP) org/jet-pac aliens.bin 12544
