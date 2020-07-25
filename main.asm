@@ -5,10 +5,7 @@ ORG $900
 GUARD &A00
 
 .START:
-    ;LDA #22
-    ;JSR &FFEE
-    ;LDA #2
-    ;JSR &FFEE
+    ; JMP TEST_KEYS
     LDX #0
 
     ; Program video NuLA
@@ -31,17 +28,49 @@ GUARD &A00
     LDY #HI(LOADER)
     JSR &FFF7
 
-    ; Patch the game to use standard keys
+    ; Patch the game to use A/S keys
 .PATCH_GAME:
+    LDA #&AE
+    STA &3F08
+    STA &3F0A
+    LDA #&BE
+    STA &3EFC
+    STA &3EFE
 
 .RUN_GAME:
     JMP &5900
+
+.TEST_KEYS:
+    LDA #22
+    JSR &FFEE
+    LDA #2
+    JSR &FFEE
+
+.PRINT:
+    LDX #0
+
+.KEY_LOOP:
+    LDA DEBUGSTR,X
+    BEQ SCAN
+    JSR &FFEE
+    INX
+    JMP KEY_LOOP
+
+.SCAN:
+    LDA #&81
+    LDX #&BF
+    LDY #&BF
+    JSR &FFF4
+    JMP PRINT
 
 .PAL:
     INCBIN "bin/pal.bin"
 
 .LOADER:
     EQUS "LOAD JET-PAC",13
+
+.DEBUGSTR:
+    EQUS "SCAN..",13,10,0
 
 .END:
     PRINT "Bytes used: ",END-START

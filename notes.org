@@ -23,8 +23,5 @@
 * colours
 ** colour 15 used for laser
 * disassembly
-** 0x04b9 LDA #$AA ; CONTINUE GAME, Y/N?
-** $170c key routine - scan for a particular key ($aa then $bb)
-** $04af when Y pressed
-** $04c0 when N pressed
-** $17f8 - game start (only when playing)
+** when loaded, $1fa3 sets up the screen, and sets some ula stuff
+** when loaded, $25fb does the keyscanning
