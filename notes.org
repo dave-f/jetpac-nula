@@ -34,13 +34,13 @@
 | Colour | Kill player? | Kill aliens? | Use            |
 |--------+--------------+--------------+----------------|
 |      0 | No           | No           | Background     |
-|      1 | No           | No           |                |
-|      2 | No           | No           |                |
-|      3 | No           | No           |                |
-|      4 | No           | No           |                |
-|      5 | No           | No           |                |
-|      6 | No           | No           |                |
-|      7 | No           | No           |                |
+|      1 | No           | No           | General        |
+|      2 | No           | No           | "              |
+|      3 | No           | No           | "              |
+|      4 | No           | No           | "              |
+|      5 | No           | No           | "              |
+|      6 | No           | No           | "              |
+|      7 | No           | No           | "              |
 |      8 | Yes          | No           | Aliens         |
 |      9 | Yes          | No           | Aliens         |
 |     10 | Yes          | No           | Aliens         |
