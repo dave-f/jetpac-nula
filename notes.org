@@ -9,9 +9,18 @@
 ** platform
 *** 3 pieces of 8x8 in bbc micro format
 *** file: jet-pac, offset 7680, 3 blocks of 8x8
-** player (needs to be reversed, use N in graphics ripper)
-*** offset 11528, 2 16x16 blocks
-** fuel pod (needs to be reversed, use N in graphics ripper)
+** player
+|--------------------------+--------|
+| Graphic part             | Offset |
+|--------------------------+--------|
+| Player body facing left  | 11528  |
+| Player body facing right | ?      |
+| Legs thrust frame 1 left | ?      |
+| Legs thrust frame 2 left | ?      |
+| Legs walk frame 1 left   | 0      |
+| Legs walk frame 2 left   | 0      |
+|--------------------------+--------|
+** fuel pod
 *** 2 pieces of 8x8 (?), offset 1152
 ** flame
 *** 2 pieces of 16x16, offset 11768
@@ -21,7 +30,26 @@
 *** offset 12044, unsure of format yet
 *** offset 12416, 16x16 in 2bpp mode, reverse - shows the graphic clearly
 * colours
-** colour 15 used for laser
+|--------+--------------+--------------+----------------|
+| Colour | Kill player? | Kill aliens? | Use            |
+|--------+--------------+--------------+----------------|
+|      0 | No           | No           | Background     |
+|      1 | No           | No           |                |
+|      2 | No           | No           |                |
+|      3 | No           | No           |                |
+|      4 | No           | No           |                |
+|      5 | No           | No           |                |
+|      6 | No           | No           |                |
+|      7 | No           | No           |                |
+|      8 | Yes          | No           | Aliens         |
+|      9 | Yes          | No           | Aliens         |
+|     10 | Yes          | No           | Aliens         |
+|     11 | Yes          | No           | Aliens         |
+|     12 | No           | Yes          | Platform       |
+|     13 | No           | Yes          | Platform       |
+|     14 | No           | Yes          | Platform       |
+|     15 | N/A          | N/A          | Player's laser |
+|--------+--------------+--------------+----------------|
 * disassembly
 ** when loaded, $1fa3 sets up the screen, and sets some ula stuff
 ** when loaded, $25fb does the keyscanning

@@ -31,18 +31,14 @@ $(GFX_OBJECTS): gfxscript
 
 gfx:
 	$(PNG2BBC) gfxscript
-	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/fuel.bin\" \"bin/fuel.bbc\"")"
-	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/mantop.bin\" \"bin/mantop.bbc\"")"
-#	$(SNAP) org/jet-pac test8x12.bin 12044
-#	$(SNAP) org/jet-pac platform.bin 7680
-#	$(SNAP) org/jet-pac pickup1.bbc 512
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/fuel.bin\" \"bin/fuel.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/mantop-l.bin\" \"bin/mantop-l.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/mantop-r.bin\" \"bin/mantop-r.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/platform.bin\" \"bin/platform.bbc\" 11 11)"
+	$(SNAP) org/jet-pac bin/platform.bbc 7680
 	$(SNAP) org/jet-pac bin/fuel.bbc 1152
-	$(SNAP) org/jet-pac bin/mantop.bbc 11520
-#	$(SNAP) org/jet-pac manbot.bbc 1472
-#	$(SNAP) org/jet-pac flame.bbc 11776
-#   $(SNAP) org/jet-pac aliens.bin 12544
-#   $(SNAP) org/jet-pac tribble.bin 11416
-#	$(SNAP) org/jet-pac rocket.bin 13576
+	$(SNAP) org/jet-pac bin/mantop-l.bbc 11648
+	$(SNAP) org/jet-pac bin/mantop-r.bbc 11520
 
 clean:
 	$(RM) $(OUTPUT_SSD)
