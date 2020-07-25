@@ -4,10 +4,10 @@
 
 BEEBEM       := C:/Dave/b2/b2_Debug
 PNG2BBC      := ../png2bbc/Release/png2bbc.exe
-EMACS        := c:/Emacs/emacs-27.pretest/bin/emacs.exe
+EMACS        := c:/Emacs/emacs-27.1/bin/emacs.exe
 SNAP         := ../snap/Release/snap.exe
-BEEBEM_FLAGS := -0
-BEEBASM      := ../../hg/beebasm/beebasm.exe
+BEEBEM_FLAGS := -b -0
+BEEBASM      := ../beebasm/beebasm.exe
 GAME_SSD     := res/blank.ssd
 OUTPUT_SSD   := jetpac-nula.ssd
 MAIN_ASM     := main.asm
@@ -24,7 +24,10 @@ GFX_OBJECTS := $(shell $(PNG2BBC) -l gfxscript)
 all: $(OUTPUT_SSD)
 
 $(OUTPUT_SSD): $(MAIN_ASM) bin/pal.bin Makefile
-	$(BEEBASM) -i $(MAIN_ASM) -boot jet-pac -di $(GAME_SSD) -do $(OUTPUT_SSD)
+	$(BEEBASM) -i $(MAIN_ASM) -di $(GAME_SSD) -do $(OUTPUT_SSD)
+
+$(GFX_OBJECTS): gfxscript
+	$(PNG2BBC) gfxscript
 
 gfx:
 	$(PNG2BBC) gfxscript
