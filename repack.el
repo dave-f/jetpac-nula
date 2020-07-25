@@ -8,7 +8,6 @@
 (defconst pixelValues '(#b00000000 #b00000001 #b00000100 #b00000101 #b00010000 #b00010001 #b00010100 #b00010101
                         #b01000000 #b01000001 #b01000100 #b01000101 #b01010000 #b01010001 #b01010100 #b01010101))
 
-
 (defun reverse-graphic (src dst)
   "Read in the source graphic `src', reverse the bytes, then write out as `dst'"
   (interactive)
