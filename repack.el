@@ -6,10 +6,17 @@
 (require 'f)
 
 (defun reverse-graphic(src dst)
-  "Repack the graphics"
+  "Read in the source graphic `src', reverse the bytes, then write out as `dst'"
   (interactive)
   (let* ((bytes (string-to-list (f-read-bytes src)))
          (new-bytes (reverse bytes)))
+    (f-write-bytes (apply 'unibyte-string new-bytes) dst)))
+
+(defun fill-graphic(src dst byte)
+  "Read in the source graphic, but write out `dst' as each byte replaced by `byte'"
+  (interactive)
+  (let* ((bytes (string-to-list (f-read-bytes src)))
+         (new-bytes (make-list (length bytes) byte)))
     (f-write-bytes (apply 'unibyte-string new-bytes) dst)))
 
 ;    (cl-loop for s from 0 to (* 47 4 8) by (* 8 4) do ; screen offset
