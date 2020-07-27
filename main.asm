@@ -77,5 +77,4 @@ GUARD &A00
     PUTFILE "org/jet-ldr","jet-ldr",&1900,&8023
     PUTFILE "org/jetpac","jetpac",&5C00,&6000
     PUTFILE "org/jet-pac","jet-pac",&2000,&5900
-    PUTFILE "bin/fuelscr.bin","fuel",&3000,&3000
     SAVE "test",START,END
