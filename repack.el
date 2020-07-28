@@ -10,6 +10,31 @@
 
 (defconst alienPixels '(#b00000000 #b00000001 #b00000010 #b00000011))
 
+; The alien graphics are stored as 2bpp, so remap according to pixNum
+
+(defun grab (srcPixel pixNum)
+  (cond ((equal pixNum 'one)
+         (let ((bitOne (logand srcPixel #b00000001))
+               (bitTwo (logand srcPixel #b00010000)))
+           (logior (lsh bitOne 0) (lsh bitTwo -4))))
+        ((equal pixNum 'two)
+         (let ((bitOne (logand srcPixel #b00000010))
+               (bitTwo (logand srcPixel #b00100000)))
+           (logior (lsh bitOne -1) (lsh bitTwo -5))))
+        ((equal pixNum 'three)
+         (let ((bitOne (logand srcPixel #b00000100))
+               (bitTwo (logand srcPixel #b01000000)))
+           (logior (lsh bitOne -2) (lsh bitTwo -6))))
+        ((equal pixNum 'four)
+         (let ((bitOne (logand srcPixel #b00001000))
+               (bitTwo (logand srcPixel #b10000000)))
+           (logior (lsh bitOne -3) (lsh bitTwo -7))))
+        (t
+         0)))
+
+(defun reorder (src)
+  (logior (grab src 'four) (lsh (grab src 'three) 2) (lsh (grab src 'two) 4) (lsh (grab src 'one) 6)))
+
 (defun reverse-graphic (src dst)
   "Read in the source graphic `src', reverse the bytes, then write out as `dst'"
   (interactive)
@@ -35,4 +60,14 @@
   (interactive)
   (let ((byte (logior (lsh col1 6) (lsh col2 4) (lsh col3 2) (lsh col4 0))))
     (fill-graphic src dst byte)))
+
+(defun remap-alien-colours (src dst)
+  "Read in the source alien graphic, and remap the pixels"
+  (interactive)
+  (let* ((bytes (string-to-list (f-read-bytes src)))
+         (new-bytes nil))
+    (cl-loop for i in bytes do
+         (push (reorder i) new-bytes))
+    (setq new-bytes (reverse new-bytes))
+    (f-write-bytes (apply 'unibyte-string new-bytes) dst)))
   

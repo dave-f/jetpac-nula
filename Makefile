@@ -48,7 +48,7 @@ gfx:
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r6.bin\" \"bin/manlegs-r6.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/platform.bin\" \"bin/platform.bbc\" 12 12)"
 #	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/items.bin\" \"bin/items.bbc\" 1 2)"
-	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-alien-with-colours \"bin/test.bin\" \"bin/test.bbc\" 0 1 2 3)"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/test.bin\" \"bin/test.bbc\")"
 #	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/test.bin\" \"bin/test.bbc\")"
 	$(SNAP) org/jet-pac bin/platform.bbc 7680
 	$(SNAP) org/jet-pac bin/fuel.bbc 1152
