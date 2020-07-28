@@ -8,6 +8,8 @@
 (defconst pixelValues '(#b00000000 #b00000001 #b00000100 #b00000101 #b00010000 #b00010001 #b00010100 #b00010101
                         #b01000000 #b01000001 #b01000100 #b01000101 #b01010000 #b01010001 #b01010100 #b01010101))
 
+(defconst alienPixels '(#b00000000 #b00000001 #b00000010 #b00000011))
+
 (defun reverse-graphic (src dst)
   "Read in the source graphic `src', reverse the bytes, then write out as `dst'"
   (interactive)
@@ -27,3 +29,10 @@
   (interactive)
   (let ((byte (logior (lsh (nth colour1 pixelValues) 1) (nth colour2 pixelValues))))
     (fill-graphic src dst byte)))
+
+(defun fill-alien-with-colours (src dst col1 col2 col3 col4)
+  "Read in the source alien graphic, but write out debug values"
+  (interactive)
+  (let ((byte (logior (lsh col1 6) (lsh col2 4) (lsh col3 2) (lsh col4 0))))
+    (fill-graphic src dst byte)))
+  
