@@ -8,10 +8,7 @@
 (defconst pixelValues '(#b00000000 #b00000001 #b00000100 #b00000101 #b00010000 #b00010001 #b00010100 #b00010101
                         #b01000000 #b01000001 #b01000100 #b01000101 #b01010000 #b01010001 #b01010100 #b01010101))
 
-(defconst alienPixels '(#b00000000 #b00000001 #b00000010 #b00000011))
-
-; The alien graphics are stored as 2bpp, so remap according to pixNum
-
+; The alien graphics are stored as 2bpp, so extract their bits
 (defun grab (srcPixel pixNum)
   (cond ((equal pixNum 'one)
          (let ((bitOne (logand srcPixel #b00000001))
@@ -65,9 +62,11 @@
   "Read in the source alien graphic, and remap the pixels"
   (interactive)
   (let* ((bytes (string-to-list (f-read-bytes src)))
-         (new-bytes nil))
+         (new-bytes nil)
+         (act-bytes nil))
     (cl-loop for i in bytes do
          (push (reorder i) new-bytes))
     (setq new-bytes (reverse new-bytes))
-    (f-write-bytes (apply 'unibyte-string new-bytes) dst)))
-  
+    (cl-loop for i downfrom (- 64 4) to 0 by 4 do
+             (setq act-bytes (nconc act-bytes (cl-subseq new-bytes i (+ i 4)))))
+    (f-write-bytes (apply 'unibyte-string act-bytes) dst)))
