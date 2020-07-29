@@ -2550,7 +2550,7 @@
 2e8d   c9 07       CMP #&07
 2e8f   b0 f5       BCS -11       2e86
 2e91   69 f0       ADC #&f0
-2e93   8d 21 fe    STA &fe21
+2e93   8d 21 fe    STA &fe21                    ; Reprogram colour for laser
 2e96   a2 38       LDX #&38
 2e98   4c fc 2a    JMP &2afc
 2e9b   a9 16       LDA #&16
@@ -3126,10 +3126,10 @@
 336c   a9 11       LDA #&11
 336e   20 ee ff    JSR &ffee
 3371   a9 0e       LDA #&0e
-3373   20 ee ff    JSR &ffee
-3376   a9 86       LDA #&86
+3373   20 ee ff    JSR &ffee                    ; &1a78 when loaded
+3376   a9 86       LDA #&86                     ; Colour 8 to 1 (6 eor 7)
 3378   8d 21 fe    STA &fe21                    ; ULA palette
-337b   a9 91       LDA #&91
+337b   a9 91       LDA #&91                     ; Colour 9 to 6 (1 eor 7)
 337d   8d 21 fe    STA &fe21                    ; ULA palette
 3380   a5 88       LDA &88
 3382   20 03 1b    JSR &1b03
