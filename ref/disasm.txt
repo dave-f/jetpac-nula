@@ -2439,7 +2439,7 @@
 2da0   4c f4 ff    JMP &fff4
 2da3   a9 16       LDA #&16
 2da5   20 ee ff    JSR &ffee
-2da8   a9 05       LDA #&05
+2da8   a9 05       LDA #&05                     ; Mode 5?
 2daa   20 ee ff    JSR &ffee
 2dad   a2 e0       LDX #&e0
 2daf   60          RTS 
@@ -2553,7 +2553,7 @@
 2e93   8d 21 fe    STA &fe21                    ; Reprogram colour for laser
 2e96   a2 38       LDX #&38
 2e98   4c fc 2a    JMP &2afc
-2e9b   a9 16       LDA #&16
+2e9b   a9 16       LDA #&16                     ; Set initial mode 7
 2e9d   20 ee ff    JSR &ffee
 2ea0   a9 07       LDA #&07
 2ea2   20 ee ff    JSR &ffee
@@ -2782,7 +2782,7 @@
 3073   85 67       STA &67
 3075   a2 00       LDX #&00
 3077   20 4a 18    JSR &184a
-307a   a9 05       LDA #&05
+307a   a9 05       LDA #&05                     ; Number of lives
 307c   85 88       STA &88
 307e   a9 00       LDA #&00
 3080   85 89       STA &89
@@ -3319,7 +3319,7 @@
 350a   a9 16       LDA #&16
 350c   20 ee ff    JSR &ffee
 350f   a9 07       LDA #&07
-3511   20 ee ff    JSR &ffee
+3511   20 ee ff    JSR &ffee                    ; Mode 7 for game over display
 3514   a9 0a       LDA #&0a
 3516   8d 00 fe    STA &fe00
 3519   a9 20       LDA #&20
@@ -5652,14 +5652,14 @@
 470f   90 e5       BCC -27       46f6
 4711   f0 e3       BEQ -29       46f6
 4713   60          RTS 
-4714   a5 58       LDA &58
+4714   a5 58       LDA &58                      ; Random number routine?
 4716   29 48       AND &48
 4718   69 38       ADC #&38
 471a   0a          ASL A
 471b   0a          ASL A
 471c   26 5a       ROL &5a
 471e   26 59       ROL &59
-4720   26 58       ROL &58
+4720   26 58       ROL &58                      ; New random in &58
 4722   60          RTS 
 4723   00          BRK   
 4724   a9 00       LDA #&00
@@ -6071,7 +6071,7 @@
 4a3b   60          RTS 
 4a3c   a9 16       LDA #&16
 4a3e   20 ee ff    JSR &ffee
-4a41   a9 07       LDA #&07
+4a41   a9 07       LDA #&07                     ; Mode 7 for "Quit game (Y/N)?"
 4a43   20 ee ff    JSR &ffee
 4a46   a5 08       LDA &08
 4a48   0a          ASL A
@@ -6082,18 +6082,18 @@
 4a51   a2 00       LDX #&00
 4a53   a0 00       LDY #&00
 4a55   20 d0 04    JSR &04d0
-4a58   a9 bb       LDA #&bb
-4a5a   20 0c 17    JSR &170c
+4a58   a9 bb       LDA #&bb                     ; "Y"
+4a5a   20 0c 17    JSR &170c                    ; Scan for key
 4a5d   f0 0a       BEQ  10       4a69
 4a5f   a6 08       LDX &08
 4a61   a9 00       LDA #&00
 4a63   95 88       STA &88,X
 4a65   a2 25       LDX #&25
 4a67   d0 09       BNE   9       4a72
-4a69   a9 aa       LDA #&aa
-4a6b   20 0c 17    JSR &170c
-4a6e   f0 e8       BEQ -24       4a58
-4a70   a2 29       LDX #&29
+4a69   a9 aa       LDA #&aa                     ; "N"
+4a6b   20 0c 17    JSR &170c                    ; Scan for key
+4a6e   f0 e8       BEQ -24       4a58           ; If not pressed, loop back round for another key
+4a70   a2 29       LDX #&29                     ; .. Otherwise, back to game
 4a72   a0 24       LDY #&24
 4a74   20 d0 04    JSR &04d0
 4a77   a9 00       LDA #&00
@@ -8764,7 +8764,7 @@
 58fc   00          BRK   
 58fd   c0 03       CPY #&03
 58ff   00          BRK   
-5900   78          SEI 
+5900   78          SEI                          ; ***** START *****
 5901   a2 35       LDX #&35
 5903   bd 40 d9    LDA &d940,X
 5906   9d 00 02    STA &0200,X
