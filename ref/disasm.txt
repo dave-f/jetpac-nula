@@ -4390,14 +4390,14 @@
 3d89   60          RTS 
 3d8a   18          CLC 
 3d8b   60          RTS 
-3d8c   c9 81       CMP #&81
-3d8e   f0 03       BEQ   3       3d93
-3d90   4c 72 e7    JMP &e772
-3d93   a5 21       LDA &21
-3d95   d0 05       BNE   5       3d9c
-3d97   a9 81       LDA #&81
-3d99   4c 72 e7    JMP &e772
-3d9c   e0 fe       CPX #&fe
+3d8c   c9 81       CMP #&81                     ; BYTEV, OSByte indirect goes in here
+3d8e   f0 03       BEQ   3       3d93           ; If we are doing a keyboard scan, jump to custom code
+3d90   4c 72 e7    JMP &e772                    ; ...otherwise, jump straight to OS
+3d93   a5 21       LDA &21                      ; Check joystick flag
+3d95   d0 05       BNE   5       3d9c           ; Branch if set
+3d97   a9 81       LDA #&81                     ; Otherwise...
+3d99   4c 72 e7    JMP &e772                    ; ...Jump to OS
+3d9c   e0 fe       CPX #&fe                     ; Joystick flag set
 3d9e   f0 19       BEQ  25       3db9
 3da0   e0 ff       CPX #&ff
 3da2   f0 1f       BEQ  31       3dc3
@@ -4406,8 +4406,8 @@
 3da8   e0 b6       CPX #&b6
 3daa   d0 eb       BNE -21       3d97
 3dac   a2 00       LDX #&00
-3dae   a9 80       LDA #&80
-3db0   20 72 e7    JSR &e772
+3dae   a9 80       LDA #&80                     ; Set up OSByte for read ADC channel
+3db0   20 72 e7    JSR &e772                    ; .. and jump to OS
 3db3   8a          TXA 
 3db4   0a          ASL A
 3db5   25 67       AND &67
@@ -5783,7 +5783,7 @@
 4800   85 50       STA &50
 4802   a0 00       LDY #&00
 4804   a2 00       LDX #&00
-4806   bd e0 2f    LDA &2fe0,X
+4806   bd e0 2f    LDA &2fe0,X                  ; Initialise high score names, 3 bytes of score, followed by name
 4809   99 00 05    STA &0500,Y
 480c   c8          INY 
 480d   e8          INX 
@@ -5813,7 +5813,7 @@
 483e   a9 8c       LDA #&8c
 4840   8d 0a 02    STA &020a
 4843   a9 24       LDA #&24
-4845   8d 0b 02    STA &020b
+4845   8d 0b 02    STA &020b                    ; Set up OSByte indirection vector?
 4848   a9 0b       LDA #&0b
 484a   a2 00       LDX #&00
 484c   20 f4 ff    JSR &fff4                    ; Keyboard auto-repeat
@@ -8790,15 +8790,15 @@
 592e   85 10       STA &10
 5930   a9 00       LDA #&00
 5932   85 12       STA &12
-5934   b1 10 91    LDA (&9110,Y)
-5937   12          ???
+5934   b1 10       LDA (&10),Y
+5936   91 12       STA (&12),Y
 5938   c8          INY 
 5939   d0 f9       BNE  -7       5934
 593b   e6 11       INC &11
 593d   e6 13       INC &13
 593f   ca          DEX 
 5940   d0 f2       BNE -14       5934
-5942   4c 00 2f    JMP &2f00
+5942   4c 00 2f    JMP &2f00                    ; Jump to &4800 in this disassembly
 5945   00          BRK   
 5946   00          BRK   
 5947   00          BRK   
