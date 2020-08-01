@@ -1,14 +1,10 @@
 * graphics
-** rocket parts
 ** pickups
 *** offset 512,16x12
 *** offset 608,16x12
 *** offset 704,16x12
 *** offset 800,16x12
 *** offset 896,16x12
-** platform
-*** 3 pieces of 8x8 in bbc micro format
-*** file: jet-pac, offset 7680, 3 blocks of 8x8
 ** player
 |--------------------------+--------|
 | Graphic part             | Offset |
@@ -20,11 +16,9 @@
 | Legs walk frame 1 left   | 0      |
 | Legs walk frame 2 left   | 0      |
 |--------------------------+--------|
-** fuel pod
-*** 2 pieces of 8x8 (?), offset 1152
 ** flame
 *** 2 pieces of 16x16, offset 11768
-** explosion? (reversed)
+** explosion
 *** 8 frames of 16x16, offset 12544
 ** aliens
 *** offset 12044, unsure of format yet
@@ -40,16 +34,29 @@
 |      4 | No           | No           | "              |
 |      5 | No           | No           | "              |
 |      6 | No           | No           | "              |
-|      7 | No           | No           | "              |
+|      7 | No           | No           | Rocket body    |
 |      8 | Yes          | No           | Aliens         |
 |      9 | Yes          | No           | Aliens         |
 |     10 | Yes          | No           | Aliens         |
 |     11 | Yes          | No           | Aliens         |
 |     12 | No           | Yes          | Platform       |
 |     13 | No           | Yes          | Platform       |
-|     14 | No           | Yes          | Platform       |
+|     14 | No           | Yes          | Platform???    |
 |     15 | N/A          | N/A          | Player's laser |
 |--------+--------------+--------------+----------------|
+
+|--------------+------------------|
+| Alien colour | Maps to (any of) |
+|--------------+------------------|
+|            0 | 0                |
+|            1 | 2, 5, 7, 8       |
+|            2 | 3, 8, 9, 11      |
+|            3 | 3, 7, 9, 11      |
+|--------------+------------------|
+
+General - items/rocket/player
+Platform - kills the aliens, but only 12&13 used in game
+
 * disassembly
 ** when loaded, $1fa3 sets up the screen, and sets some ula stuff
 ** when loaded, $25fb does the keyscanning

@@ -5,7 +5,7 @@ ORG $900
 GUARD &A00
 
 .START:
-    ; JMP TEST_KEYS
+    JMP LOAD_GAME
     LDX #0
 
     ; Program video NuLA
@@ -36,6 +36,20 @@ GUARD &A00
     LDA #&BE
     STA &3EFC
     STA &3EFE
+
+    ; Disable the palette reshuffle...
+    ; Not sure why it does this
+    LDA #&EA
+    STA &3378
+    STA &3379
+    STA &337A
+    STA &337D
+    STA &337E
+    STA &337F
+
+    ; Give us 9 lives
+    LDA #&09
+    STA &307B
 
 .RUN_GAME:
     JMP &5900
