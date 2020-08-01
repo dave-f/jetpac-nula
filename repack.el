@@ -37,8 +37,8 @@
   (interactive "nByte: ")
   (let* ((l (logand arg pixelLeft))
          (r (logand arg pixelRight))
-         (pl (logior (logand r #b1) (logand (lsh r -1) #b10) (logand (lsh r -2) #b100) (logand (lsh r -3) #b1000)))
-         (pr (logior (logand (lsh l -1) #b1) (logand (lsh l -2) #b10) (logand (lsh l -3) #b100) (logand (lsh l -4) #b1000))))
+         (pl (logior (logand (lsh l -1) #b1) (logand (lsh l -2) #b10) (logand (lsh l -3) #b100) (logand (lsh l -4) #b1000)))
+         (pr (logior (logand r #b1) (logand (lsh r -1) #b10) (logand (lsh r -2) #b100) (logand (lsh r -3) #b1000))))
     (princ (cons pl pr))))
 
 (defun reorder (src)
