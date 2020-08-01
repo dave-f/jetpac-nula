@@ -48,7 +48,7 @@ GUARD &A00
     STA &337F
 
     ; Give us 9 lives
-    LDA #&09
+    LDA #153
     STA &307B
 
 .RUN_GAME:
