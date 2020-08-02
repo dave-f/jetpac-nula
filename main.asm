@@ -38,7 +38,7 @@ GUARD &A00
     STA &3EFE
 
     ; Disable the palette reshuffle...
-    ; Not sure why it does this
+    ; Not sure why it does this as yet
     LDA #&EA
     STA &3378
     STA &3379
@@ -47,35 +47,24 @@ GUARD &A00
     STA &337E
     STA &337F
 
-    ; Give us 9 lives
-    LDA #153
+    ; Give us 99 lives, for player 1 and player 2
+    LDA #&99
     STA &307B
+    STA &308C
 
-.RUN_GAME:
-    JMP &5900
-
-.TEST_KEYS:
-    LDA #22
-    JSR &FFEE
-    LDA #2
-    JSR &FFEE
-
-.PRINT:
+    ; Patch title
     LDX #0
 
-.KEY_LOOP:
-    LDA DEBUGSTR,X
-    BEQ SCAN
-    JSR &FFEE
+.TITLE_LOOP:
+    LDA TITLESTR,X
+    BEQ RUN_GAME
+    STA &287C,X
     INX
-    JMP KEY_LOOP
+    JMP TITLE_LOOP
 
-.SCAN:
-    LDA #&81
-    LDX #&BF
-    LDY #&BF
-    JSR &FFF4
-    JMP PRINT
+    ; And go
+.RUN_GAME:
+    JMP &5900
 
 .PAL:
     INCBIN "bin/pal.bin"
@@ -85,6 +74,11 @@ GUARD &A00
 
 .DEBUGSTR:
     EQUS "SCAN..",13,10,0
+
+.TITLESTR:
+    ;EQUS "......JET-PAC Selection Page"
+    EQUS "      JET-PAC : NuLA Refuel "
+    EQUB 0
 
 .END:
     PRINT "Bytes used: ",END-START
