@@ -1979,7 +1979,7 @@
 2a17   18          CLC 
 2a18   bd 00 09    LDA &0900,X
 2a1b   f0 04       BEQ   4       2a21
-2a1d   51 31 91    EOR (&9131,Y)
+2a1d   51 31 91    EOR (&9131,Y)                ; Sprites? All disassembled wrong :(
 2a20   31 c6 34    AND (&34c6,Y)
 2a23   f0 07       BEQ   7       2a2c
 2a25   ca          DEX 
@@ -2004,14 +2004,14 @@
 2a45   85 54       STA &54
 2a47   d0 c6       BNE -58       2a0f
 2a49   60          RTS 
-2a4a   ad 55 03    LDA &0355
-2a4d   c9 07       CMP #&07
-2a4f   90 08       BCC   8       2a59
+2a4a   ad 55 03    LDA &0355                    ; *** Set up screen for game ***
+2a4d   c9 07       CMP #&07                     ; Check current screen mode is 7  
+2a4f   90 08       BCC   8       2a59           ; If not, jump to 2a59
 2a51   a9 0c       LDA #&0c
-2a53   20 ee ff    JSR &ffee
-2a56   4c a3 1f    JMP &1fa3
+2a53   20 ee ff    JSR &ffee                    ; If we are in mode 7, clear text area
+2a56   4c a3 1f    JMP &1fa3                    ; .. and jump to &1FA3 (&38a3 in this)
 2a59   a9 0c       LDA #&0c
-2a5b   4c ee ff    JMP &ffee
+2a5b   4c ee ff    JMP &ffee                    ; Clear text area
 2a5e   20 d9 11    JSR &11d9
 2a61   a9 30       LDA #&30
 2a63   8d 86 11    STA &1186
@@ -2091,8 +2091,8 @@
 2af6   a0 00       LDY #&00
 2af8   20 f4 ff    JSR &fff4                    ; OSBYTE 201 - Disable keyboard
 2afb   4c d5 14    JMP &14d5
-2afe   a0 e0       LDY #&e0
-2b00   a9 0c       LDA #&0c
+2afe   a0 e0       LDY #&e0                     ; ???
+2b00   a9 0c       LDA #&0c                     ; *** Jump here to start game when space pressed ***
 2b02   a2 00       LDX #&00
 2b04   20 f4 ff    JSR &fff4                    ; OSBYTE 12 - Set repeat interval to 0 centiseconds
 2b07   ea          NOP 
@@ -2105,8 +2105,8 @@
 2b13   a2 00       LDX #&00
 2b15   a0 00       LDY #&00
 2b17   20 f4 ff    JSR &fff4                    ; OSBYTE 210 - Disable sound
-2b1a   20 f2 11    JSR &11f2
-2b1d   20 6e 17    JSR &176e
+2b1a   20 f2 11    JSR &11f2                    ; *** Play introduction tune ***
+2b1d   20 6e 17    JSR &176e                    ; *** JSR game (&306E unrelocated)
 2b20   a9 0b       LDA #&0b
 2b22   a2 00       LDX #&00
 2b24   20 f4 ff    JSR &fff4                    ; OSBYTE 11 - Disable keyboard auto-repeat
@@ -2134,7 +2134,7 @@
 2b55   a0 00       LDY #&00
 2b57   a9 d2       LDA #&d2
 2b59   4c f4 ff    JMP &fff4
-2b5c   a9 00       LDA #&00
+2b5c   a9 00       LDA #&00                     ; &125C when relocated
 2b5e   85 22       STA &22
 2b60   85 23       STA &23
 2b62   20 2e 12    JSR &122e
@@ -2147,7 +2147,7 @@
 2b74   85 22       STA &22
 2b76   20 e0 ff    JSR &ffe0
 2b79   c9 20       CMP #&20
-2b7b   f0 83       BEQ 125       2b00
+2b7b   f0 83       BEQ 125       2b00           ; SPACE - Start game
 2b7d   c9 81       CMP #&81
 2b7f   f0 26       BEQ  38       2ba7
 2b81   c9 82       CMP #&82
@@ -2777,7 +2777,7 @@
 3066   a9 0f       LDA #&0f
 3068   20 f4 ff    JSR &fff4                    ; OSBYTE 15, flush buffers
 306b   4c e2 14    JMP &14e2
-306e   20 2c 18    JSR &182c
+306e   20 2c 18    JSR &182c                    ; **** START MAIN GAME ****
 3071   a9 05       LDA #&05
 3073   85 67       STA &67
 3075   a2 00       LDX #&00
@@ -2815,7 +2815,7 @@
 30b5   85 67       STA &67
 30b7   a9 00       LDA #&00
 30b9   85 92       STA &92
-30bb   20 4a 11    JSR &114a
+30bb   20 4a 11    JSR &114a                    ; ** SETUP SCREEN FOR MAIN GAME
 30be   20 b4 14    JSR &14b4
 30c1   20 cb 19    JSR &19cb
 30c4   a5 67       LDA &67
@@ -3739,32 +3739,34 @@
 386e   a0 00       LDY #&00
 3870   a9 04       LDA #&04
 3872   85 31       STA &31
-3874   bd 40 3c    LDA &3c40,X
-3877   85 30       STA &30
-3879   86 35       STX &35
-387b   29 0f       AND &0f
-387d   aa          TAX 
-387e   bd f0 0b    LDA &0bf0,X
-3881   91 53 c8    STA (&c853,Y)
-3884   a5 30       LDA &30
+3874   bd 40 3c    LDA &3c40,X                  ; Get a byte of data (this code is at &2E69 after relocate)
+3877   85 30       STA &30                      ; Save A to &30
+3879   86 35       STX &35                      ; Save X to &35
+387b   29 0f       AND #&0f                     ; Take off top 4 bits
+387d   aa          TAX                          ; X = low 4 bits
+387e   bd f0 0b    LDA &0bf0,X                  ; Get a byte from lookup table (not sure what?)
+3881   91 53       STA (&53),Y                  ; Store it
+3883   c8          INY                          ; Increment Y
+3884   a5 30       LDA &30                      ; Fetch original byte of data
 3886   4a          LSR A
-3887   4a          LSR A
+3887   4a          LSR A                        ; Shift right 4 times to get the original top 4 bits
 3888   4a          LSR A
-3889   4a          LSR A
-388a   aa          TAX 
-388b   bd f0 0b    LDA &0bf0,X
-388e   91 53 c8    STA (&c853,Y)
-3891   a6 35       LDX &35
-3893   e8          INX 
-3894   c6 31       DEC &31
-3896   d0 dc       BNE -36       3874
+3889   4a          LSR A                        
+388a   aa          TAX                          ; Move these bits to X
+388b   bd f0 0b    LDA &0bf0,X                  ; And get another byte from lookup table (not sure what?)
+388e   91 53       STA (&53),Y
+3890   c8          INY
+3891   a6 35       LDX &35                      ; Restore X from earlier
+3893   e8          INX                          ; And increment it
+3894   c6 31       DEC &31                      ; Decrement loop counter
+3896   d0 dc       BNE -36       3874           ; .. and loop back if not finished
 3898   e0 58       CPX #&58
-389a   b0 06       BCS   6       38a2
-389c   8a          TXA 
-389d   69 04       ADC #&04
+389a   b0 06       BCS   6       38a2           ; Jump to RTS
+389c   8a          TXA
+389d   69 04       ADC #&04                     ; Otherwise X = X+4
 389f   aa          TAX 
-38a0   d0 ce       BNE -50       3870
-38a2   60          RTS 
+38a0   d0 ce       BNE -50       3870           ; Back round to top
+38a2   60          RTS                          ; Return
 38a3   a9 16       LDA #&16
 38a5   20 ee ff    JSR &ffee
 38a8   a9 03       LDA #&03
@@ -5694,31 +5696,33 @@
 4757   60          RTS 
 4758   60          RTS 
 4759   8e 6a 2e    STX &2e6a
-475c   8c 6b 2e    STY &2e6b
+475c   8c 6b 2e    STY &2e6b                    ; Self-modify with X/Y
 475f   a2 00       LDX #&00
 4761   8d 74 2e    STA &2e74
 4764   8d 81 2e    STA &2e81
 4767   a0 00       LDY #&00
-4769   bd c0 37    LDA &37c0,X
-476c   85 30       STA &30
-476e   86 35       STX &35
-4770   29 0f       AND &0f
-4772   aa          TAX 
-4773   bd 50 0b    LDA &0b50,X
-4776   91 53 c8    STA (&c853,Y)
-4779   a5 30       LDA &30
+4769   bd c0 37    LDA &37c0,X                  ; Get a byte of alien data (pointer set from X/Y above)
+476c   85 30       STA &30                      ; Save it in &30
+476e   86 35       STX &35                      ; &35 = X
+4770   29 0f       AND #&0f                     ; Take off top 4 bits
+4772   aa          TAX
+4773   bd 50 0b    LDA &0b50,X                  ; And get a byte from table at &B50
+4776   91 53       STA (&53),Y                  ; Store it
+4778   c8          INY                          ; Increment Y
+4779   a5 30       LDA &30                      ; Load the original byte
 477b   4a          LSR A
-477c   4a          LSR A
+477c   4a          LSR A                        ; And shift down the top 4 bits
 477d   4a          LSR A
 477e   4a          LSR A
-477f   aa          TAX 
-4780   bd 50 0b    LDA &0b50,X
-4783   91 53 c8    STA (&c853,Y)
+477f   aa          TAX                          ; Transfer to X
+4780   bd 50 0b    LDA &0b50,X                  ; And look up from table again
+4783   91 53       STA (&53),Y                  ; Store byte
+4785   c8          INY                          ; Increment Y
 4786   a6 35       LDX &35
 4788   e8          INX 
-4789   e4 55       CPX &55
-478b   90 dc       BCC -36       4769
-478d   60          RTS 
+4789   e4 55       CPX &55                      ; Are we done?
+478b   90 dc       BCC -36       4769           ; If not, jump back round
+478d   60          RTS                          ; Return
 478e   00          BRK   
 478f   00          BRK   
 4790   8e b5 2e    STX &2eb5
@@ -5809,7 +5813,7 @@
 4836   a9 00       LDA #&00
 4838   85 20       STA &20                      ; 0 = Single player game
 483a   85 21       STA &21                      ; 0 = Keyboard control
-483c   85 22       STA &22
+483c   85 22       STA &22                      ; 0 = main menu / 0xff = high scores
 483e   a9 8c       LDA #&8c
 4840   8d 0a 02    STA &020a
 4843   a9 24       LDA #&24
@@ -5974,8 +5978,9 @@
 495b   67          ???
 495c   9b          ???
 495d   67          ???
-495e   11 00 a2    ORA (&a200,Y)
-4961   00          BRK   
+495e   11          ???
+495f   00          BRK
+4960   a2 00       LDX #0
 4962   bd 00 30    LDA &3000,X
 4965   9d 00 01    STA &0100,X
 4968   e8          INX 
@@ -6823,8 +6828,8 @@
 4efc   23          ???
 4efd   2b          ???
 4efe   03          ???
-4eff   01 00 00    ORA X,&0000
-4f02   00          BRK   
+4eff   01 00 00    ORA X,&0000                  ; &4F00 (pre relocate) - start of alien data
+4f02   00          BRK                          ; Upon load, relocated to &3600
 4f03   00          BRK   
 4f04   00          BRK   
 4f05   00          BRK   

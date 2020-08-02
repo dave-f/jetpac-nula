@@ -1,5 +1,7 @@
 ; Placeholder assembly file
 ; 14 July 2020
+;
+; .. Eventually some NuLA setup code will need calling from Jet-Pac, perhaps store at &380
 
 ORG $900
 GUARD &A00
