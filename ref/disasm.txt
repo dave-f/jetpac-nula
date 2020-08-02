@@ -1804,7 +1804,7 @@
 2876   0f          ???
 2877   0f          ???
 2878   81 9d 83    STA &839d
-287b   8d 20 20    STA &2020
+287b   8d 20 20    STA &2020                    ; "JET-PAC Selection Page"
 287e   20 20 20    JSR &2020
 2881   20 4a 45    JSR &454a
 2884   54          ???
@@ -2089,12 +2089,12 @@
 2af2   a9 c9       LDA #&c9
 2af4   a2 ff       LDX #&ff
 2af6   a0 00       LDY #&00
-2af8   20 f4 ff    JSR &fff4
+2af8   20 f4 ff    JSR &fff4                    ; OSBYTE 201 - Disable keyboard
 2afb   4c d5 14    JMP &14d5
 2afe   a0 e0       LDY #&e0
 2b00   a9 0c       LDA #&0c
 2b02   a2 00       LDX #&00
-2b04   20 f4 ff    JSR &fff4
+2b04   20 f4 ff    JSR &fff4                    ; OSBYTE 12 - Set repeat interval to 0 centiseconds
 2b07   ea          NOP 
 2b08   ea          NOP 
 2b09   ea          NOP 
@@ -2104,12 +2104,12 @@
 2b11   a9 d2       LDA #&d2
 2b13   a2 00       LDX #&00
 2b15   a0 00       LDY #&00
-2b17   20 f4 ff    JSR &fff4
+2b17   20 f4 ff    JSR &fff4                    ; OSBYTE 210 - Disable sound
 2b1a   20 f2 11    JSR &11f2
 2b1d   20 6e 17    JSR &176e
 2b20   a9 0b       LDA #&0b
 2b22   a2 00       LDX #&00
-2b24   20 f4 ff    JSR &fff4
+2b24   20 f4 ff    JSR &fff4                    ; OSBYTE 11 - Disable keyboard auto-repeat
 2b27   a9 00       LDA #&00
 2b29   85 22       STA &22
 2b2b   4c d2 12    JMP &12d2
@@ -2436,7 +2436,7 @@
 2d9a   a9 c9       LDA #&c9
 2d9c   a2 00       LDX #&00
 2d9e   a0 00       LDY #&00
-2da0   4c f4 ff    JMP &fff4
+2da0   4c f4 ff    JMP &fff4                    ; OSBYTE 201 - Enable keyboard
 2da3   a9 16       LDA #&16
 2da5   20 ee ff    JSR &ffee
 2da8   a9 05       LDA #&05                     ; Mode 5?
@@ -2775,22 +2775,22 @@
 3062   4c f4 ff    JMP &fff4
 3065   17          ???
 3066   a9 0f       LDA #&0f
-3068   20 f4 ff    JSR &fff4
+3068   20 f4 ff    JSR &fff4                    ; OSBYTE 15, flush buffers
 306b   4c e2 14    JMP &14e2
 306e   20 2c 18    JSR &182c
 3071   a9 05       LDA #&05
 3073   85 67       STA &67
 3075   a2 00       LDX #&00
 3077   20 4a 18    JSR &184a
-307a   a9 05       LDA #&05                     ; Number of lives
+307a   a9 05       LDA #&05                     ; Number of lives, player 1
 307c   85 88       STA &88
 307e   a9 00       LDA #&00
 3080   85 89       STA &89
-3082   a5 20       LDA &20
-3084   f0 09       BEQ   9       308f
+3082   a5 20       LDA &20                      ; Read number of players flag
+3084   f0 09       BEQ   9       308f           ; If single player, jump to 308f
 3086   a2 28       LDX #&28
 3088   20 4a 18    JSR &184a
-308b   a9 05       LDA #&05
+308b   a9 05       LDA #&05                     ; Number of lives, player 2
 308d   85 89       STA &89
 308f   a5 67       LDA &67
 3091   29 01       AND &01
@@ -5807,13 +5807,13 @@
 4831   a2 03       LDX #&03
 4833   20 f4 ff    JSR &fff4                    ; *FX 200,3
 4836   a9 00       LDA #&00
-4838   85 20       STA &20
-483a   85 21       STA &21
+4838   85 20       STA &20                      ; 0 = Single player game
+483a   85 21       STA &21                      ; 0 = Keyboard control
 483c   85 22       STA &22
 483e   a9 8c       LDA #&8c
 4840   8d 0a 02    STA &020a
 4843   a9 24       LDA #&24
-4845   8d 0b 02    STA &020b                    ; Set up OSByte indirection vector?
+4845   8d 0b 02    STA &020b                    ; Set up OSByte indirection vector
 4848   a9 0b       LDA #&0b
 484a   a2 00       LDX #&00
 484c   20 f4 ff    JSR &fff4                    ; Keyboard auto-repeat
