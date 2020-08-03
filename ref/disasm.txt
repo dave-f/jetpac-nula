@@ -2504,10 +2504,10 @@
 2e28   9d 70 06    STA &0670,X
 2e2b   9d 40 04    STA &0440,X
 2e2e   9d 50 04    STA &0450,X
-2e31   20 14 2e    JSR &2e14
+2e31   20 14 2e    JSR &2e14                    ; Pick a random number..
 2e34   a5 58       LDA &58
-2e36   29 03       AND &03
-2e38   69 0a       ADC #&0a
+2e36   29 03       AND #&03
+2e38   69 0a       ADC #&0a                     ; .. and use for length of laser
 2e3a   9d 60 04    STA &0460,X
 2e3d   a5 73       LDA &73
 2e3f   9d 70 04    STA &0470,X
@@ -2542,15 +2542,15 @@
 2e7b   9d 20 04    STA &0420,X
 2e7e   a4 52       LDY &52
 2e80   a9 ff       LDA #&ff
-2e82   51 53 91    EOR (&9153,Y)
-2e85   53          ???
-2e86   20 14 2e    JSR &2e14
+2e82   51 53       EOR (&53),Y
+2e84   91 53       STA (&53),Y
+2e86   20 14 2e    JSR &2e14                    ; Pick a random number...
 2e89   a5 58       LDA &58
-2e8b   29 07       AND &07
+2e8b   29 07       AND #&07
 2e8d   c9 07       CMP #&07
 2e8f   b0 f5       BCS -11       2e86
 2e91   69 f0       ADC #&f0
-2e93   8d 21 fe    STA &fe21                    ; Reprogram colour for laser
+2e93   8d 21 fe    STA &fe21                    ; .. and use as laser colour
 2e96   a2 38       LDX #&38
 2e98   4c fc 2a    JMP &2afc
 2e9b   a9 16       LDA #&16                     ; Set initial mode 7
@@ -4146,11 +4146,11 @@
 3ba9   c9 06       CMP #&06
 3bab   90 03       BCC   3       3bb0
 3bad   4c d2 22    JMP &22d2
-3bb0   20 14 2e    JSR &2e14
+3bb0   20 14 2e    JSR &2e14                    ; Pick a random number..
 3bb3   a5 58       LDA &58
-3bb5   29 07       AND &07
+3bb5   29 07       AND #&07
 3bb7   aa          TAX 
-3bb8   bd a0 21    LDA &21a0,X
+3bb8   bd a0 21    LDA &21a0,X                  ; .. and use for position of fuel drop
 3bbb   85 7e       STA &7e
 3bbd   bd fa 27    LDA &27fa,X
 3bc0   85 80       STA &80
@@ -4957,7 +4957,7 @@
 4177   85 6c       STA &6c
 4179   20 14 2e    JSR &2e14
 417c   a5 58       LDA &58
-417e   29 3f       AND &3f
+417e   29 3f       AND #&3f
 4180   85 6e       STA &6e
 4182   60          RTS 
 4183   c6 6e       DEC &6e
@@ -4965,20 +4965,20 @@
 4187   60          RTS 
 4188   20 14 2e    JSR &2e14
 418b   a5 58       LDA &58
-418d   29 7f       AND &7f
+418d   29 7f       AND #&7f
 418f   38          SEC 
 4190   e9 05       SBC #&05
 4192   10 fc       BPL  -4       4190
 4194   69 05       ADC #&05
 4196   85 6d       STA &6d
-4198   20 14 2e    JSR &2e14
+4198   20 14 2e    JSR &2e14                    ; Pick a random number...
 419b   a5 58       LDA &58
-419d   29 07       AND &07
+419d   29 07       AND #&07
 419f   aa          TAX 
 41a0   bd fa 27    LDA &27fa,X
 41a3   85 69       STA &69
 41a5   bd 02 28    LDA &2802,X
-41a8   85 6a       STA &6a
+41a8   85 6a       STA &6a                      ; .. and use for position of item drop
 41aa   a9 00       LDA #&00
 41ac   85 68       STA &68
 41ae   bd 0a 28    LDA &280a,X
@@ -5066,9 +5066,9 @@
 423c   06 00       ASL &00
 423e   03          ???
 423f   00          BRK   
-4240   a2 00       LDX #&00
+4240   a2 00       LDX #&00                     ; Store current alien in &5B
 4242   86 5b       STX &5b
-4244   bd 44 06    LDA &0644,X
+4244   bd 44 06    LDA &0644,X                  ; Alien loop, &644,&645,&646,&647,&648,&649 contain alien flags
 4247   f0 70       BEQ 112       42b9
 4249   10 03       BPL   3       424e
 424b   4c ec 12    JMP &12ec
@@ -5094,12 +5094,12 @@
 4273   6a          ROR A
 4274   aa          TAX 
 4275   a9 7f       LDA #&7f
-4277   20 a7 08    JSR &08a7
+4277   20 a7 08    JSR &08a7                    ; Remove dead alien?
 427a   a6 5b       LDX &5b
 427c   fe 44 06    INC &0644,X
 427f   bd 44 06    LDA &0644,X
-4282   c9 0a       CMP #&0a
-4284   f0 2b       BEQ  43       42b1
+4282   c9 0a       CMP #&0a                     ; Ready to remove?
+4284   f0 2b       BEQ  43       42b1           ; Yes..
 4286   e9 01       SBC #&01
 4288   4a          LSR A
 4289   08          PHP 
@@ -5120,9 +5120,9 @@
 42a7   6a          ROR A
 42a8   aa          TAX 
 42a9   a9 7f       LDA #&7f
-42ab   20 a7 08    JSR &08a7
+42ab   20 a7 08    JSR &08a7                    ; Remove dead alien?
 42ae   4c f0 2a    JMP &2af0
-42b1   a9 ff       LDA #&ff
+42b1   a9 ff       LDA #&ff                     ; &ff => create another alien
 42b3   9d 44 06    STA &0644,X
 42b6   4c f0 2a    JMP &2af0
 42b9   a9 f8       LDA #&f8
@@ -5256,12 +5256,12 @@
 43e8   a9 02       LDA #&02
 43ea   9d 5c 06    STA &065c,X
 43ed   20 64 2c    JSR &2c64
-43f0   e6 5b       INC &5b
+43f0   e6 5b       INC &5b                      ; Increment alien number
 43f2   a6 5b       LDX &5b
-43f4   e0 06       CPX #&06
-43f6   b0 03       BCS   3       43fb
-43f8   4c 44 29    JMP &2944
-43fb   60          RTS 
+43f4   e0 06       CPX #&06                     ; Have we done all 6 aliens?
+43f6   b0 03       BCS   3       43fb           ; If so, skip to RTS
+43f8   4c 44 29    JMP &2944                    ; Otherwise jump to &2944 (&4244 here)
+43fb   60          RTS
 43fc   a0 29       LDY #&29
 43fe   a9 07       LDA #&07
 4400   4c f1 ff    JMP &fff1
@@ -5314,20 +5314,20 @@
 4461   00          BRK   
 4462   8e 1f a2    STX &a21f
 4465   00          BRK   
-4466   bd 44 06    LDA &0644,X
+4466   bd 44 06    LDA &0644,X                  ; Spawn new aliens
 4469   30 06       BMI   6       4471
 446b   e8          INX 
-446c   e0 06       CPX #&06
-446e   90 f6       BCC -10       4466
+446c   e0 06       CPX #&06                     ; Done all 6 aliens?
+446e   90 f6       BCC -10       4466           ; Loop back if not
 4470   60          RTS 
 4471   86 66       STX &66
 4473   a9 00       LDA #&00
-4475   9d 44 06    STA &0644,X
+4475   9d 44 06    STA &0644,X                  ; Create new alien?
 4478   20 e9 10    JSR &10e9
-447b   a5 58       LDA &58
-447d   c9 10       CMP #&10
-447f   90 f7       BCC  -9       4478
-4481   c9 ae       CMP #&ae
+447b   a5 58       LDA &58                      ;
+447d   c9 10       CMP #&10                     ; Set up alien with (clamped)
+447f   90 f7       BCC  -9       4478           ; random Y co-ord
+4481   c9 ae       CMP #&ae                     ;
 4483   b0 f3       BCS -13       4478
 4485   9d 32 06    STA &0632,X
 4488   85 51       STA &51
@@ -5344,14 +5344,14 @@
 44a2   b0 0f       BCS  15       44b3
 44a4   20 14 2e    JSR &2e14
 44a7   a5 58       LDA &58
-44a9   29 07       AND &07
+44a9   29 07       AND #&07
 44ab   c9 04       CMP #&04
 44ad   90 11       BCC  17       44c0
 44af   a9 03       LDA #&03
 44b1   d0 0d       BNE  13       44c0
 44b3   20 14 2e    JSR &2e14
 44b6   a5 58       LDA &58
-44b8   09 f8       ORA &f8
+44b8   09 f8       ORA #&f8
 44ba   c9 fc       CMP #&fc
 44bc   b0 02       BCS   2       44c0
 44be   a9 fc       LDA #&fc
@@ -5369,10 +5369,10 @@
 44dc   f0 08       BEQ   8       44e6
 44de   c0 06       CPY #&06
 44e0   f0 04       BEQ   4       44e6
-44e2   09 fc       ORA &fc
+44e2   09 fc       ORA #&fc
 44e4   30 04       BMI   4       44ea
-44e6   29 00       AND &00
-44e8   29 01       AND &01
+44e6   29 00       AND #&00
+44e8   29 01       AND #&01
 44ea   9d 5c 06    STA &065c,X
 44ed   a5 60       LDA &60
 44ef   c9 03       CMP #&03
@@ -5695,7 +5695,7 @@
 4755   85 52       STA &52
 4757   60          RTS 
 4758   60          RTS 
-4759   8e 6a 2e    STX &2e6a
+4759   8e 6a 2e    STX &2e6a                    ; &2e59
 475c   8c 6b 2e    STY &2e6b                    ; Self-modify with X/Y
 475f   a2 00       LDX #&00
 4761   8d 74 2e    STA &2e74
