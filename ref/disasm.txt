@@ -840,7 +840,7 @@
 241c   d0 f4       BNE -12       2412
 241e   68          PLA 
 241f   60          RTS 
-2420   00          BRK   
+2420   00          BRK                          ; Alien pixel look-up tables begin (6*16 bytes)
 2421   40          RTI 
 2422   11 41 80    ORA (&8041,Y)
 2425   c0 91       CPY #&91
@@ -3733,7 +3733,7 @@
 385f   a0 2f       LDY #&2f
 3861   a9 7f       LDA #&7f
 3863   4c a7 08    JMP &08a7
-3866   8e 75 1f    STX &1f75
+3866   8e 75 1f    STX &1f75                    ; &2e59
 3869   8c 76 1f    STY &1f76
 386c   a2 00       LDX #&00
 386e   a0 00       LDY #&00
@@ -3745,7 +3745,7 @@
 387b   29 0f       AND #&0f                     ; Take off top 4 bits
 387d   aa          TAX                          ; X = low 4 bits
 387e   bd f0 0b    LDA &0bf0,X                  ; Get a byte from lookup table (not sure what?)
-3881   91 53       STA (&53),Y                  ; Store it
+3881   91 53       STA (&53),Y                  ; Store it    -> &3100
 3883   c8          INY                          ; Increment Y
 3884   a5 30       LDA &30                      ; Fetch original byte of data
 3886   4a          LSR A
@@ -5066,8 +5066,8 @@
 423c   06 00       ASL &00
 423e   03          ???
 423f   00          BRK   
-4240   a2 00       LDX #&00                     ; Store current alien in &5B
-4242   86 5b       STX &5b
+4240   a2 00       LDX #&00                     ; --------------------------------
+4242   86 5b       STX &5b                      ; Store current alien in &5B
 4244   bd 44 06    LDA &0644,X                  ; Alien loop, &644,&645,&646,&647,&648,&649 contain alien flags
 4247   f0 70       BEQ 112       42b9
 4249   10 03       BPL   3       424e
@@ -5320,9 +5320,9 @@
 446c   e0 06       CPX #&06                     ; Done all 6 aliens?
 446e   90 f6       BCC -10       4466           ; Loop back if not
 4470   60          RTS 
-4471   86 66       STX &66
-4473   a9 00       LDA #&00
-4475   9d 44 06    STA &0644,X                  ; Create new alien?
+4471   86 66       STX &66                      ; &66 = alien number
+4473   a9 00       LDA #&00                     ;
+4475   9d 44 06    STA &0644,X                  ; Clear $644,X -> 0
 4478   20 e9 10    JSR &10e9
 447b   a5 58       LDA &58                      ;
 447d   c9 10       CMP #&10                     ; Set up alien with (clamped)
@@ -5330,18 +5330,18 @@
 4481   c9 ae       CMP #&ae                     ;
 4483   b0 f3       BCS -13       4478
 4485   9d 32 06    STA &0632,X
-4488   85 51       STA &51
-448a   a9 00       LDA #&00
+4488   85 51       STA &51                      ; &51 = Y position
+448a   a9 00       LDA #&00                     ; Set X position to 0
 448c   9d 26 06    STA &0626,X
-448f   85 50       STA &50
+448f   85 50       STA &50                      ; &50 = X position
 4491   20 24 2e    JSR &2e24
 4494   a5 53       LDA &53
 4496   9d 38 06    STA &0638,X
-4499   a5 54       LDA &54
+4499   a5 54       LDA &54                      ; &53/&54 = Screen address?
 449b   9d 3e 06    STA &063e,X
-449e   a5 51       LDA &51
+449e   a5 51       LDA &51                      ; Load Y position
 44a0   c9 30       CMP #&30
-44a2   b0 0f       BCS  15       44b3
+44a2   b0 0f       BCS  15       44b3           ; If Y pos < 48 ...
 44a4   20 14 2e    JSR &2e14
 44a7   a5 58       LDA &58
 44a9   29 07       AND #&07
@@ -5349,22 +5349,22 @@
 44ad   90 11       BCC  17       44c0
 44af   a9 03       LDA #&03
 44b1   d0 0d       BNE  13       44c0
-44b3   20 14 2e    JSR &2e14
+44b3   20 14 2e    JSR &2e14                    ; Get random number
 44b6   a5 58       LDA &58
-44b8   09 f8       ORA #&f8
-44ba   c9 fc       CMP #&fc
-44bc   b0 02       BCS   2       44c0
-44be   a9 fc       LDA #&fc
-44c0   4c a9 1b    JMP &1ba9
+44b8   09 f8       ORA #&f8                     ; Set top 5 bits : 1111'1000
+44ba   c9 fc       CMP #&fc                     ; And compare with 1111'1100
+44bc   b0 02       BCS   2       44c0           ; If < 1111'1100..
+44be   a9 fc       LDA #&fc                     ; Set to 1111'1100
+44c0   4c a9 1b    JMP &1ba9                    ;
 44c3   20 14 2e    JSR &2e14
-44c6   a5 58       LDA &58
-44c8   9d 4a 06    STA &064a,X
+44c6   a5 58       LDA &58                      ; Get random number..
+44c8   9d 4a 06    STA &064a,X                  ; .. and store it
 44cb   20 14 2e    JSR &2e14
-44ce   a5 58       LDA &58
-44d0   9d 56 06    STA &0656,X
+44ce   a5 58       LDA &58                      ; Get another one..
+44d0   9d 56 06    STA &0656,X                  ; .. and store that
 44d3   20 14 2e    JSR &2e14
-44d6   a5 58       LDA &58
-44d8   30 0e       BMI  14       44e8
+44d6   a5 58       LDA &58                      ; Get another one..
+44d8   30 0e       BMI  14       44e8           ; If the top bit is set (&80) ie bigger than 128, jump
 44da   a4 60       LDY &60
 44dc   f0 08       BEQ   8       44e6
 44de   c0 06       CPY #&06
@@ -5638,7 +5638,7 @@
 46f3   20 ee ff    JSR &ffee
 46f6   b5 8a       LDA &8a,X
 46f8   48          PHA 
-46f9   29 f0       AND &f0
+46f9   29 f0       AND #&f0
 46fb   4a          LSR A
 46fc   4a          LSR A
 46fd   4a          LSR A
@@ -5646,28 +5646,28 @@
 46ff   69 30       ADC #&30
 4701   20 ee ff    JSR &ffee
 4704   68          PLA 
-4705   29 0f       AND &0f
+4705   29 0f       AND #&0f
 4707   69 30       ADC #&30
 4709   20 ee ff    JSR &ffee
 470c   e8          INX 
 470d   e4 67       CPX &67
 470f   90 e5       BCC -27       46f6
 4711   f0 e3       BEQ -29       46f6
-4713   60          RTS 
-4714   a5 58       LDA &58                      ; Random number routine?
-4716   29 48       AND &48
+4713   60          RTS
+4714   a5 58       LDA &58                      ; --------------------------------
+4716   29 48       AND &48                      ; Random number routine
 4718   69 38       ADC #&38
 471a   0a          ASL A
 471b   0a          ASL A
 471c   26 5a       ROL &5a
 471e   26 59       ROL &59
 4720   26 58       ROL &58                      ; New random in &58
-4722   60          RTS 
+4722   60          RTS                          ; --------------------------------
 4723   00          BRK   
-4724   a9 00       LDA #&00
-4726   85 2f       STA &2f
-4728   a5 50       LDA &50
-472a   29 fe       AND &fe
+4724   a9 00       LDA #&00                     ; --------------------------------
+4726   85 2f       STA &2f                      ; X/Y -> screen address maybe?
+4728   a5 50       LDA &50                      ; &50 / &51 = X/Y
+472a   29 fe       AND #&fe
 472c   0a          ASL A
 472d   26 2f       ROL &2f
 472f   0a          ASL A
@@ -5676,7 +5676,7 @@
 4734   a5 51       LDA &51
 4736   4a          LSR A
 4737   4a          LSR A
-4738   29 fe       AND &fe
+4738   29 fe       AND #&fe
 473a   85 52       STA &52
 473c   4a          LSR A
 473d   4a          LSR A
@@ -5691,14 +5691,14 @@
 474d   65 52       ADC &52
 474f   85 54       STA &54
 4751   a5 51       LDA &51
-4753   29 07       AND &07
+4753   29 07       AND #&07
 4755   85 52       STA &52
-4757   60          RTS 
-4758   60          RTS 
-4759   8e 6a 2e    STX &2e6a                    ; &2e59
-475c   8c 6b 2e    STY &2e6b                    ; Self-modify with X/Y
+4757   60          RTS                          ; -------------------------------- Expand aliens (&2E59)
+4758   60          RTS                          ; Pixel lookup tables at &B20,&B30,&B40,&B50,&B60,&B70,
+4759   8e 6a 2e    STX &2e6a                    ; and are 16 bytes each.
+475c   8c 6b 2e    STY &2e6b                    ; Self-modify below
 475f   a2 00       LDX #&00
-4761   8d 74 2e    STA &2e74
+4761   8d 74 2e    STA &2e74                    
 4764   8d 81 2e    STA &2e81
 4767   a0 00       LDY #&00
 4769   bd c0 37    LDA &37c0,X                  ; Get a byte of alien data (pointer set from X/Y above)
@@ -5706,7 +5706,7 @@
 476e   86 35       STX &35                      ; &35 = X
 4770   29 0f       AND #&0f                     ; Take off top 4 bits
 4772   aa          TAX
-4773   bd 50 0b    LDA &0b50,X                  ; And get a byte from table at &B50
+4773   bd 50 0b    LDA &0b50,X                  ; And get a byte from the pixel look-up table
 4776   91 53       STA (&53),Y                  ; Store it
 4778   c8          INY                          ; Increment Y
 4779   a5 30       LDA &30                      ; Load the original byte
@@ -5715,7 +5715,7 @@
 477d   4a          LSR A
 477e   4a          LSR A
 477f   aa          TAX                          ; Transfer to X
-4780   bd 50 0b    LDA &0b50,X                  ; And look up from table again
+4780   bd 50 0b    LDA &0b50,X                  ; And look up from pixel lookup table again
 4783   91 53       STA (&53),Y                  ; Store byte
 4785   c8          INY                          ; Increment Y
 4786   a6 35       LDX &35
@@ -5724,14 +5724,14 @@
 478b   90 dc       BCC -36       4769           ; If not, jump back round
 478d   60          RTS                          ; Return
 478e   00          BRK   
-478f   00          BRK   
-4790   8e b5 2e    STX &2eb5
+478f   00          BRK                          ; --------------------------------
+4790   8e b5 2e    STX &2eb5                    ; Self mod
 4793   8c b6 2e    STY &2eb6
 4796   aa          TAX 
 4797   a9 a1       LDA #&a1
 4799   38          SEC 
-479a   e5 50       SBC &50
-479c   4a          LSR A
+479a   e5 50       SBC &50                      ; A = 161 - &50
+479c   4a          LSR A                        ; /2
 479d   85 50       STA &50
 479f   a4 52       LDY &52
 47a1   a5 53       LDA &53
@@ -5744,11 +5744,11 @@
 47af   a9 08       LDA #&08
 47b1   85 34       STA &34
 47b3   18          CLC 
-47b4   bd 00 09    LDA &0900,X
+47b4   bd 00 09    LDA &0900,X                  ; &2EB4 when relocated; load 
 47b7   f0 07       BEQ   7       47c0
-47b9   51 31 91    EOR (&9131,Y)
-47bc   31 6c 56    AND (&566c,Y)
-47bf   00          BRK   
+47b9   51 31       EOR (&31),Y
+47bb   91 31       STA (&31),Y
+47bd   6c 56 00    JMP (&0056)
 47c0   c6 34       DEC &34
 47c2   f0 17       BEQ  23       47db
 47c4   ca          DEX 
@@ -5782,7 +5782,7 @@
 47f6   d0 af       BNE -81       47a7
 47f8   c5 63       CMP &63
 47fa   90 c4       BCC -60       47c0
-47fc   4c 0d 2b    JMP &2b0d
+47fc   4c 0d 2b    JMP &2b0d                    ; --------------------------------
 47ff   00          BRK   
 4800   85 50       STA &50
 4802   a0 00       LDY #&00
@@ -5994,7 +5994,7 @@
 4979   8d 89 02    STA &0289
 497c   4c 80 33    JMP &3380
 497f   00          BRK   
-4980   43          ???
+4980   43          ???                          ; "Congratulations you have just broken into the program"
 4981   6f          ???
 4982   6e 67 72    ROR &7267
 4985   61 74 75    ADC X,&7574
@@ -6046,7 +6046,7 @@
 49f8   20 20 20    JSR &2020
 49fb   20 20 20    JSR &2020
 49fe   20 20 8d    JSR &8d20
-4a01   84 9d       STY &9d
+4a01   84 9d       STY &9d                      ; -------------------------------- &30B5, SPRITE WORK AREA
 4a03   83          ???
 4a04   51 75 69    EOR (&6975,Y)
 4a07   74          ???
@@ -6066,10 +6066,10 @@
 4a27   73          ???
 4a28   0d 4e 6f    ORA &6f4e
 4a2b   0d 31 0d    ORA &0d31
-4a2e   32          ???
-4a2f   0d a5 67    ORA &67a5
-4a32   29 01       AND &01
-4a34   85 08       STA &08
+4a2e   32          ???                          ; -------------------------------- &4A30
+4a2f   0d a5 67    ORA &67a5                    ; Should be LDA &67 (ie. a5 67)
+4a32   29 01       AND #&01                     ; Above is disassembled wrong, but this is the
+4a34   85 08       STA &08                      ; routine to handle escape pressed during death
 4a36   aa          TAX 
 4a37   b5 88       LDA &88,X
 4a39   d0 01       BNE   1       4a3c
@@ -6126,18 +6126,18 @@
 4aa1   e8          INX 
 4aa2   20 ee ff    JSR &ffee
 4aa5   d0 f3       BNE -13       4a9a
-4aa7   a2 00       LDX #&00
+4aa7   a2 00       LDX #&00                     ; --------------------------------
 4aa9   bd 00 31    LDA &3100,X
-4aac   9d 58 01    STA &0158,X
+4aac   9d 58 01    STA &0158,X                  ; Store "Quit game?" test at &158,X
 4aaf   e8          INX 
 4ab0   e0 30       CPX #&30
 4ab2   d0 f5       BNE -11       4aa9
 4ab4   a2 00       LDX #&00
-4ab6   bd 30 31    LDA &3130,X
-4ab9   9d 80 04    STA &0480,X
-4abc   e8          INX 
-4abd   e0 80       CPX #&80
-4abf   d0 f5       BNE -11       4ab6
+4ab6   bd 30 31    LDA &3130,X                  ; Move code to handle "Quit Game?"
+4ab9   9d 80 04    STA &0480,X                  ; to &480,X.  Moves from &3130,X
+4abc   e8          INX                          ; which is &4A30 here.
+4abd   e0 80       CPX #&80                     ; Done 128 bytes?
+4abf   d0 f5       BNE -11       4ab6           ; --------------------------------
 4ac1   4c 10 32    JMP &3210
 4ac4   20 6d 61    JSR &616d
 4ac7   6b          ???
@@ -8795,9 +8795,9 @@
 592e   85 10       STA &10
 5930   a9 00       LDA #&00
 5932   85 12       STA &12
-5934   b1 10       LDA (&10),Y
-5936   91 12       STA (&12),Y
-5938   c8          INY 
+5934   b1 10       LDA (&10),Y                  ; Download data from &2000 to &700
+5936   91 12       STA (&12),Y                  ; This includes the 6 alien pixel tables at &B20,
+5938   c8          INY                          ; Which are at
 5939   d0 f9       BNE  -7       5934
 593b   e6 11       INC &11
 593d   e6 13       INC &13
