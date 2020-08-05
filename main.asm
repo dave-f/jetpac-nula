@@ -49,13 +49,15 @@ GUARD &A00
     STA &337E
     STA &337F
 
-    ;Stop aliens spawning
-    ;LDA #&60
-    ;STA &4466
+    ; Stop aliens spawning
+    ; LDA #&60
+    ; STA &4466
 
-    ; Test alien Y pos clamping
-    LDA #&90
-    STA &447e
+    ; Test alien X/Y pos clamping
+    ; LDA #&20
+    ; STA &448B
+    ; LDA #&90
+    ; STA &447e
 
     ; Give us 99 lives, for player 1 and player 2
     LDA #&99
