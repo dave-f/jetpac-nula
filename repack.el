@@ -56,8 +56,7 @@
          (r (logand arg pixelRight))
          (pl (logior (logand (lsh l -1) #b1) (logand (lsh l -2) #b10) (logand (lsh l -3) #b100) (logand (lsh l -4) #b1000)))
          (pr (logior (logand r #b1) (logand (lsh r -1) #b10) (logand (lsh r -2) #b100) (logand (lsh r -3) #b1000))))
-    (princ (cons pl pr))))
-
+    (cons pl pr)))
 
 (defun encode-pixel (col1 col2)
   "Given two pixel colours, returns the corresponding Mode 2 byte"
