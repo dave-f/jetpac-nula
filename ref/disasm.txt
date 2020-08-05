@@ -3733,18 +3733,18 @@
 385f   a0 2f       LDY #&2f
 3861   a9 7f       LDA #&7f
 3863   4c a7 08    JMP &08a7
-3866   8e 75 1f    STX &1f75                    ; &2e59
+3866   8e 75 1f    STX &1f75                    ; Used to expand the 2 movable rocket parts
 3869   8c 76 1f    STY &1f76
 386c   a2 00       LDX #&00
 386e   a0 00       LDY #&00
 3870   a9 04       LDA #&04
 3872   85 31       STA &31
-3874   bd 40 3c    LDA &3c40,X                  ; Get a byte of data (this code is at &2E69 after relocate)
+3874   bd 40 3c    LDA &3c40,X                  ; Get a byte of data
 3877   85 30       STA &30                      ; Save A to &30
 3879   86 35       STX &35                      ; Save X to &35
 387b   29 0f       AND #&0f                     ; Take off top 4 bits
 387d   aa          TAX                          ; X = low 4 bits
-387e   bd f0 0b    LDA &0bf0,X                  ; Get a byte from lookup table (not sure what?)
+387e   bd f0 0b    LDA &0bf0,X                  ; Get a byte from rocket pixel lookup table
 3881   91 53       STA (&53),Y                  ; Store it    -> &3100
 3883   c8          INY                          ; Increment Y
 3884   a5 30       LDA &30                      ; Fetch original byte of data
@@ -5693,13 +5693,13 @@
 4751   a5 51       LDA &51
 4753   29 07       AND #&07
 4755   85 52       STA &52
-4757   60          RTS                          ; -------------------------------- Expand aliens (&2E59)
-4758   60          RTS                          ; Pixel lookup tables at &B20,&B30,&B40,&B50,&B60,&B70,
-4759   8e 6a 2e    STX &2e6a                    ; and are 16 bytes each.
-475c   8c 6b 2e    STY &2e6b                    ; Self-modify below
+4757   60          RTS                          ; -------------------------------- Expand aliens etc (&2E59)
+4758   60          RTS                          ; Pixel lookup tables are 16 bytes each, and at &B20,&B30,&B40,&B50,&B60,&B70
+4759   8e 6a 2e    STX &2e6a                    ; Also, rocket is at &BF0
+475c   8c 6b 2e    STY &2e6b                    ; Self-modify LDA at &4769
 475f   a2 00       LDX #&00
-4761   8d 74 2e    STA &2e74                    
-4764   8d 81 2e    STA &2e81
+4761   8d 74 2e    STA &2e74                    ; Self-modify the two pixel look-ups below
+4764   8d 81 2e    STA &2e81                    ; Self-modify the two pixel look-ups below
 4767   a0 00       LDY #&00
 4769   bd c0 37    LDA &37c0,X                  ; Get a byte of alien data (pointer set from X/Y above)
 476c   85 30       STA &30                      ; Save it in &30
