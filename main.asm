@@ -50,8 +50,8 @@ GUARD &A00
     STA &337F
 
     ; Stop aliens spawning
-    ; LDA #&60
-    ; STA &4466
+    LDA #&60
+    STA &4466
 
     ; Test alien X/Y pos clamping
     ; LDA #&20
@@ -68,6 +68,12 @@ GUARD &A00
     LDA #&07
     STA &3283
     STA &3372
+
+    ; These 3 stores define the top and bottom bar colours
+    LDA #&1
+    STA &33ab
+    STA &33b0
+    STA &33bb
 
     ; Patch title
     LDX #0
