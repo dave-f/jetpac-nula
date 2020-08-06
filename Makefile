@@ -32,6 +32,8 @@ $(GFX_OBJECTS): gfxscript
 gfx:
 	$(PNG2BBC) gfxscript
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/fuel.bin\" \"bin/fuel.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/items.bin\" \"bin/items.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/flames.bin\" \"bin/flames.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/mantop-l.bin\" \"bin/mantop-l.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/mantop-r.bin\" \"bin/mantop-r.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-l1.bin\" \"bin/manlegs-l1.bbc\")"
@@ -46,11 +48,25 @@ gfx:
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r4.bin\" \"bin/manlegs-r4.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r5.bin\" \"bin/manlegs-r5.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r6.bin\" \"bin/manlegs-r6.bbc\")"
-	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/platform.bin\" \"bin/platform.bbc\" 12 12)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/platform.bin\" \"bin/platform.bbc\" 12 12)"
 #	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/items.bin\" \"bin/items.bbc\" 1 2)"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/test.bin\" \"bin/test.bbc\")"
-#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/test.bin\" \"bin/test.bbc\")"
-	$(SNAP) org/jet-pac bin/platform.bbc 7680
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/mantop-l.bin\" \"bin/mantop-l.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/mantop-r.bin\" \"bin/mantop-r.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-l1.bin\" \"bin/manlegs-l1.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-l2.bin\" \"bin/manlegs-l2.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-l3.bin\" \"bin/manlegs-l3.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-l4.bin\" \"bin/manlegs-l4.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-l5.bin\" \"bin/manlegs-l5.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-l6.bin\" \"bin/manlegs-l6.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-r1.bin\" \"bin/manlegs-r1.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-r2.bin\" \"bin/manlegs-r2.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-r3.bin\" \"bin/manlegs-r3.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-r4.bin\" \"bin/manlegs-r4.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-r5.bin\" \"bin/manlegs-r5.bbc\" 3 3)"
+#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-r6.bin\" \"bin/manlegs-r6.bbc\" 3 3)"
+
+	$(SNAP) org/jet-pac bin/platform.bin 7680
 	$(SNAP) org/jet-pac bin/fuel.bbc 1152
 	$(SNAP) org/jet-pac bin/mantop-l.bbc 11648
 	$(SNAP) org/jet-pac bin/mantop-r.bbc 11520
@@ -69,6 +85,7 @@ gfx:
 	$(SNAP) org/jet-pac bin/items.bbc 512
 	$(SNAP) org/jet-pac bin/test.bbc 12032
 #	$(SNAP) org/jet-pac bin/test.bbc 12416
+	$(SNAP) org/jet-pac bin/flames.bbc 11776
 
 clean:
 	$(RM) $(OUTPUT_SSD)
