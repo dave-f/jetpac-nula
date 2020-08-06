@@ -7,7 +7,7 @@ ORG $900
 GUARD &A00
 
 .START:
-    JMP LOAD_GAME
+    ;JMP LOAD_GAME
     LDX #0
 
     ; Program video NuLA
@@ -79,7 +79,7 @@ GUARD &A00
     JMP &5900
 
 .PAL:
-    INCBIN "bin/pal.bin"
+    INCBIN "bin/game.pal"
 
 .LOADER:
     EQUS "LOAD JET-PAC",13

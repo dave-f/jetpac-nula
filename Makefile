@@ -23,7 +23,7 @@ GFX_OBJECTS := $(shell $(PNG2BBC) -l gfxscript)
 
 all: $(OUTPUT_SSD)
 
-$(OUTPUT_SSD): $(MAIN_ASM) bin/pal.bin Makefile
+$(OUTPUT_SSD): $(MAIN_ASM) bin/game.pal Makefile
 	$(BEEBASM) -v -i $(MAIN_ASM) -di $(GAME_SSD) -do $(OUTPUT_SSD)
 
 $(GFX_OBJECTS): gfxscript
@@ -48,9 +48,10 @@ gfx:
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r4.bin\" \"bin/manlegs-r4.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r5.bin\" \"bin/manlegs-r5.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r6.bin\" \"bin/manlegs-r6.bbc\")"
-#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/platform.bin\" \"bin/platform.bbc\" 12 12)"
-#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/items.bin\" \"bin/items.bbc\" 1 2)"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/test.bin\" \"bin/test.bbc\")"
+
+#   Used to test player collision
+#   -----------------------------
 #	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/mantop-l.bin\" \"bin/mantop-l.bbc\" 3 3)"
 #	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/mantop-r.bin\" \"bin/mantop-r.bbc\" 3 3)"
 #	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-l1.bin\" \"bin/manlegs-l1.bbc\" 3 3)"
@@ -83,9 +84,11 @@ gfx:
 	$(SNAP) org/jet-pac bin/manlegs-r5.bbc 1536
 	$(SNAP) org/jet-pac bin/manlegs-r6.bbc 1600
 	$(SNAP) org/jet-pac bin/items.bbc 512
-	$(SNAP) org/jet-pac bin/test.bbc 12032
-#	$(SNAP) org/jet-pac bin/test.bbc 12416
 	$(SNAP) org/jet-pac bin/flames.bbc 11776
+#   Location of first alien
+	$(SNAP) org/jet-pac bin/test.bbc 12032
+#   Location of second alien
+#	$(SNAP) org/jet-pac bin/test.bbc 12416
 
 clean:
 	$(RM) $(OUTPUT_SSD)
