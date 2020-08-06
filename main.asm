@@ -64,6 +64,11 @@ GUARD &A00
     STA &307B
     STA &308C
 
+    ; Change text colours on the score display
+    LDA #&07
+    STA &3283
+    STA &3372
+
     ; Patch title
     LDX #0
 

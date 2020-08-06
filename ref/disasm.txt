@@ -2446,17 +2446,17 @@
 2db0   ea          NOP 
 2db1   4c 15 17    JMP &1715
 2db4   a9 1f       LDA #&1f
-2db6   20 ee ff    JSR &ffee
+2db6   20 ee ff    JSR &ffee                    ; VDU 31 (move text cursor)
 2db9   a5 67       LDA &67
 2dbb   c9 02       CMP #&02
 2dbd   d0 04       BNE   4       2dc3
-2dbf   a9 06       LDA #&06
+2dbf   a9 06       LDA #&06                     ; to 6
 2dc1   d0 02       BNE   2       2dc5
-2dc3   a9 0d       LDA #&0d
+2dc3   a9 0d       LDA #&0d                     ; or 13, depending on player
 2dc5   20 ee ff    JSR &ffee
 2dc8   a9 00       LDA #&00
 2dca   20 ee ff    JSR &ffee
-2dcd   a9 2d       LDA #&2d
+2dcd   a9 2d       LDA #&2d                     ; Print "-"
 2dcf   20 ee ff    JSR &ffee
 2dd2   4c 31 1a    JMP &1a31
 2dd5   a9 0f       LDA #&0f
