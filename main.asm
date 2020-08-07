@@ -1,30 +1,17 @@
 ; Placeholder assembly file
 ; 14 July 2020
 ;
-; .. Eventually some NuLA setup code will need calling from Jet-Pac, perhaps store at &380
+; .. Eventually some NuLA setup code will need calling from Jet-Pac
+; .. Perhaps store at &100.
 
-ORG $900
-GUARD &A00
+ORG &1900
+GUARD &2000
+
+; Both these are still wrong as they are overwritten
+RESIDENT_MEM = &4980 + &20 ; after reloc (&4980 + &20) -> &30A0
+REAL_RESIDENT_MEM = &30A0 ; when we patch code, must reference it's relocated area
 
 .START:
-    ;JMP LOAD_GAME
-    LDX #0
-
-    ; Program video NuLA
-.PROGRAM_PAL:
-    LDA PAL,X
-
-    ; first write -  colour index | red
-    STA &FE23
-    INX
-    LDA PAL,X
-
-    ; second write - green | blue
-    STA &FE23
-    INX
-    CPX #30
-    BNE PROGRAM_PAL
-
 .LOAD_GAME:
     LDX #LO(LOADER)
     LDY #HI(LOADER)
@@ -50,8 +37,8 @@ GUARD &A00
     STA &337F
 
     ; Stop aliens spawning
-    LDA #&60
-    STA &4466
+    ; LDA #&60
+    ; STA &4466
 
     ; Test alien X/Y pos clamping
     ; LDA #&20
@@ -70,10 +57,46 @@ GUARD &A00
     STA &3372
 
     ; These 3 stores define the top and bottom bar colours
+    ; These may have to be > 8 for the aliens to collide?
     LDA #&1
     STA &33ab
+    LDA #&3f
     STA &33b0
+    LDA #&2
     STA &33bb
+
+    LDX #0
+
+.COPY_RESIDENT:
+    ;LDA START_RESIDENT,X
+    ;STA RESIDENT_MEM,X
+    ;INX
+    ;CPX #END_RESIDENT-START_RESIDENT
+    ;BNE COPY_RESIDENT
+
+    ; Patch game to call into the disable/enable nula code
+
+    ;LDA #&4C
+    ;STA &2EA5
+    ;LDA #LO(REAL_RESIDENT_MEM + (DISABLE_NULA - START_RESIDENT))
+    ;STA &2EA6
+    ;LDA #HI(REAL_RESIDENT_MEM + (DISABLE_NULA - START_RESIDENT))
+    ;STA &2EA7
+
+    ;LDA #&20
+    ;STA &38EE
+    ;LDA #LO(RESIDENT_MEM + (ENABLE_NULA - START_RESIDENT))
+    ;STA &38EF
+    ;LDA #HI(RESIDENT_MEM + (ENABLE_NULA - START_RESIDENT))
+    ;STA &38F0
+    ;LDA #&EA
+    ;STA &38F1
+    ;STA &38F2
+    ;STA &38F3
+    ;STA &38F4
+    ;STA &38F5
+    ;STA &38F6
+    ;STA &38F7
 
     ; Patch title
     LDX #0
@@ -89,22 +112,51 @@ GUARD &A00
 .RUN_GAME:
     JMP &5900
 
+.START_RESIDENT:
+    PHA
+    LDA #&0A
+    STA &FE00
+    LDA #&20
+    STA &FE01
+    PLA
+    BNE ENABLE_NULA
+    LDA #&40
+    STA &FE22
+    RTS
+
+.ENABLE_NULA:
+    LDX #0
+
+.PROGRAM_PAL:
+    LDA RESIDENT_MEM+(PAL-START_RESIDENT),X
+
+    ; first write -  colour index | red
+    STA &FE23
+    INX
+    LDA PAL,X
+
+    ; second write - green | blue
+    STA &FE23
+    INX
+    CPX #30
+    BNE PROGRAM_PAL
+    RTS
+
 .PAL:
     INCBIN "bin/game.pal"
 
+.END_RESIDENT:
 .LOADER:
     EQUS "LOAD JET-PAC",13
 
-.DEBUGSTR:
-    EQUS "SCAN..",13,10,0
-
 .TITLESTR:
     ;EQUS "......JET-PAC Selection Page"
-    EQUS "      JET-PAC : NuLA Refuel "
+    EQUS  "      JET-PAC : NuLA Refuel "
     EQUB 0
 
 .END:
     PRINT "Bytes used: ",END-START
+    PRINT "Bytes used for resident code: ", END_RESIDENT-START_RESIDENT
     PUTFILE "org/jet-ldr","jet-ldr",&1900,&8023
     PUTFILE "org/jetpac","jetpac",&5C00,&6000
     PUTFILE "org/jet-pac","jet-pac",&2000,&5900

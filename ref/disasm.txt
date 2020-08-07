@@ -3321,9 +3321,9 @@
 350f   a9 07       LDA #&07
 3511   20 ee ff    JSR &ffee                    ; Mode 7 for game over display
 3514   a9 0a       LDA #&0a
-3516   8d 00 fe    STA &fe00
-3519   a9 20       LDA #&20
-351b   8d 01 fe    STA &fe01
+3516   8d 00 fe    STA &fe00                    ; Register &0A - Cursor start
+3519   a9 20       LDA #&20                     ; to #b10'0000
+351b   8d 01 fe    STA &fe01                    ; Seems a good a place as any?
 351e   a5 67       LDA &67
 3520   29 01       AND &01
 3522   69 31       ADC #&31
