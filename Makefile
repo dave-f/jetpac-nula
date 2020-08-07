@@ -24,7 +24,7 @@ GFX_OBJECTS := $(shell $(PNG2BBC) -l gfxscript)
 all: $(OUTPUT_SSD)
 
 $(OUTPUT_SSD): $(MAIN_ASM) bin/game.pal Makefile
-	$(BEEBASM) -v -i $(MAIN_ASM) -di $(GAME_SSD) -do $(OUTPUT_SSD)
+	$(BEEBASM) -i $(MAIN_ASM) -di $(GAME_SSD) -do $(OUTPUT_SSD)
 
 $(GFX_OBJECTS): gfxscript
 	$(PNG2BBC) gfxscript
