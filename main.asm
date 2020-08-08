@@ -60,13 +60,13 @@ STACK_DATA = LOAD_ADDRESS + &2900
     STA &3372
 
     ; These 3 stores define the top and bottom bar colours
-    ; These may have to be > 8 for the aliens to collide?
+    ; These may have to be platform colours for the aliens to collide?
     LDA #&1
-    STA &33ab
+    ;STA &33ab
     LDA #&3f
-    STA &33b0
+    ;STA &33b0
     LDA #&2
-    STA &33bb
+    ;STA &33bb
 
     ; Patch game to call into the disable/enable nula code
     LDX #0
