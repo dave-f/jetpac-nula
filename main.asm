@@ -8,7 +8,7 @@ ORG &1900
 GUARD &2000
 
 PALETTE_ADDRESS = &100 ; Palette stored at bottom of stack
-ENABLE_NULA_ADDRESS = &2EE ; Enable function at OSFILE control block workspace
+ENABLE_NULA_ADDRESS = &2EA ; Enable function at OSFILE control block workspace
 DISABLE_NULA_ADDRESS = &100+&20 ; Disable function after the palette
 STACK_TOP = &12F
 
@@ -71,9 +71,9 @@ STACK_TOP = &12F
 
 .COPY_RESIDENT:
     LDA #&EA
-    STA &2EE,X
+    STA ENABLE_NULA_ADDRESS,X
     INX
-    CPX #18
+    CPX #21+1
     BNE COPY_RESIDENT
 
     ;LDA START_RESIDENT,X
@@ -160,7 +160,7 @@ STACK_TOP = &12F
 
 .END:
     PRINT "Bytes used: ",END-START
-    PRINT "Bytes used for enable code: ", PAL-ENABLE_NULA, "Available: ", &2FF-&2EE
+    PRINT "Bytes used for enable code: ", PAL-ENABLE_NULA, "Available: ", &2FF-ENABLE_NULA_ADDRESS
     PRINT "Bytes used for disable code: ", ENABLE_NULA-DISABLE_NULA, "Available: ", (STACK_TOP-&100)-32
     PUTFILE "org/jet-ldr","jet-ldr",&1900,&8023
     PUTFILE "org/jetpac","jetpac",&5C00,&6000
