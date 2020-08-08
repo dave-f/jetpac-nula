@@ -78,7 +78,7 @@ STACK_DATA = LOAD_ADDRESS + &2900
     CPX #21+1
     BNE COPY_ENABLE_CODE
     LDX #0
-    
+
 .COPY_PALETTE_DATA:
     LDA PAL,X
     STA STACK_DATA,X
@@ -91,32 +91,32 @@ STACK_DATA = LOAD_ADDRESS + &2900
     LDA DISABLE_NULA,X
     STA STACK_DATA+32,X
     INX
-    CPX #15+1
+    CPX #(ENABLE_NULA-DISABLE_NULA)+1
     BNE COPY_DISABLE_CODE
 
-    ; Patch inital jump to mode 7, so we disable nula
-    LDA #&4C
-    STA &2EA5
-    LDA #LO(&100+32)
-    STA &2EA6
-    LDA #HI(&100+32)
-    STA &2EA7
+    ; Initial game mode
+    LDA #LO(DISABLE_NULA_ADDRESS)
+    STA &2EA3
+    LDA #HI(DISABLE_NULA_ADDRESS)
+    STA &2EA4
 
-    ; Patch jump to game, so we enable nula
-    LDA #&20
-    STA &38EE
+    ; Enter game; enable NuLA
     LDA #LO(ENABLE_NULA_ADDRESS)
-    STA &38EF
+    STA &38FB
     LDA #HI(ENABLE_NULA_ADDRESS)
-    STA &38F0
-    LDA #&EA
-    STA &38F1
-    STA &38F2
-    STA &38F3
-    STA &38F4
-    STA &38F5
-    STA &38F6
-    STA &38F7
+    STA &38FC
+
+    ; Game Over
+    LDA #LO(DISABLE_NULA_ADDRESS)
+    STA &3512
+    LDA #HI(DISABLE_NULA_ADDRESS)
+    STA &3513
+
+    ; Quit Game (Y/N)?
+    LDA #LO(DISABLE_NULA_ADDRESS)
+    STA &4A44
+    LDA #HI(DISABLE_NULA_ADDRESS)
+    STA &4A45
 
     ; Patch title
     LDX #0
@@ -133,31 +133,23 @@ STACK_DATA = LOAD_ADDRESS + &2900
     JMP &5900
 
 .DISABLE_NULA:
-    LDA #&0A
-    STA &FE00
-    LDA #&20
-    STA &FE01
+    JSR &FFEE
     LDA #&40
     STA &FE22
     RTS
 
 .ENABLE_NULA:
+    PHA
     LDX #0
 
 .PROGRAM_PAL:
     LDA &100,X
-
-    ; first write -  colour index | red
-    STA &FE23
-    INX
-    LDA &100,X
-
-    ; second write - green | blue
     STA &FE23
     INX
     CPX #30
     BNE PROGRAM_PAL
-    RTS
+    PLA
+    JMP &197A
 
 .PAL:
     INCBIN "bin/game.pal"
