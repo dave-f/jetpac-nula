@@ -94,27 +94,29 @@ STACK_DATA = LOAD_ADDRESS + &2900
     CPX #15+1
     BNE COPY_DISABLE_CODE
 
-    ;LDA #&4C
-    ;STA &2EA5
-    ;LDA #LO(REAL_RESIDENT_MEM + (DISABLE_NULA - START_RESIDENT))
-    ;STA &2EA6
-    ;LDA #HI(REAL_RESIDENT_MEM + (DISABLE_NULA - START_RESIDENT))
-    ;STA &2EA7
+    ; Patch inital jump to mode 7, so we disable nula
+    LDA #&4C
+    STA &2EA5
+    LDA #LO(&100+32)
+    STA &2EA6
+    LDA #HI(&100+32)
+    STA &2EA7
 
-    ;LDA #&20
-    ;STA &38EE
-    ;LDA #LO(RESIDENT_MEM + (ENABLE_NULA - START_RESIDENT))
-    ;STA &38EF
-    ;LDA #HI(RESIDENT_MEM + (ENABLE_NULA - START_RESIDENT))
-    ;STA &38F0
-    ;LDA #&EA
-    ;STA &38F1
-    ;STA &38F2
-    ;STA &38F3
-    ;STA &38F4
-    ;STA &38F5
-    ;STA &38F6
-    ;STA &38F7
+    ; Patch jump to game, so we enable nula
+    LDA #&20
+    STA &38EE
+    LDA #LO(ENABLE_NULA_ADDRESS)
+    STA &38EF
+    LDA #HI(ENABLE_NULA_ADDRESS)
+    STA &38F0
+    LDA #&EA
+    STA &38F1
+    STA &38F2
+    STA &38F3
+    STA &38F4
+    STA &38F5
+    STA &38F6
+    STA &38F7
 
     ; Patch title
     LDX #0
@@ -148,7 +150,7 @@ STACK_DATA = LOAD_ADDRESS + &2900
     ; first write -  colour index | red
     STA &FE23
     INX
-    LDA PAL,X
+    LDA &100,X
 
     ; second write - green | blue
     STA &FE23
