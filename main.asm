@@ -7,9 +7,10 @@
 ORG &1900
 GUARD &2000
 
-; Both these are still wrong as they are overwritten
-RESIDENT_MEM = &100
-REAL_RESIDENT_MEM = &100
+PALETTE_ADDRESS = &100 ; Palette stored at bottom of stack
+ENABLE_NULA_ADDRESS = &2EE ; Enable function at OSFILE control block workspace
+DISABLE_NULA_ADDRESS = &100+&20 ; Disable function after the palette
+STACK_TOP = &12F
 
 .START:
 .LOAD_GAME:
@@ -115,18 +116,15 @@ REAL_RESIDENT_MEM = &100
     INX
     JMP TITLE_LOOP
 
-    ; And go
+    ; All set!
 .RUN_GAME:
     JMP &5900
 
-.START_RESIDENT:
-    PHA
+.DISABLE_NULA:
     LDA #&0A
     STA &FE00
     LDA #&20
     STA &FE01
-    PLA
-    BNE ENABLE_NULA
     LDA #&40
     STA &FE22
     RTS
@@ -135,7 +133,7 @@ REAL_RESIDENT_MEM = &100
     LDX #0
 
 .PROGRAM_PAL:
-    LDA RESIDENT_MEM+(PAL-START_RESIDENT),X
+    LDA &100,X
 
     ; first write -  colour index | red
     STA &FE23
@@ -147,8 +145,6 @@ REAL_RESIDENT_MEM = &100
     INX
     CPX #30
     BNE PROGRAM_PAL
-
-.END_RESIDENT:
     RTS
 
 .PAL:
@@ -164,7 +160,8 @@ REAL_RESIDENT_MEM = &100
 
 .END:
     PRINT "Bytes used: ",END-START
-    PRINT "Bytes used for resident code: ", END_RESIDENT-START_RESIDENT
+    PRINT "Bytes used for enable code: ", PAL-ENABLE_NULA, "Available: ", &2FF-&2EE
+    PRINT "Bytes used for disable code: ", ENABLE_NULA-DISABLE_NULA, "Available: ", (STACK_TOP-&100)-32
     PUTFILE "org/jet-ldr","jet-ldr",&1900,&8023
     PUTFILE "org/jetpac","jetpac",&5C00,&6000
     PUTFILE "org/jet-pac","jet-pac",&2000,&5900
