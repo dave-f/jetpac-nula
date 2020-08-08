@@ -7,10 +7,12 @@
 ORG &1900
 GUARD &2000
 
+LOAD_ADDRESS = &2000
 PALETTE_ADDRESS = &100 ; Palette stored at bottom of stack
 ENABLE_NULA_ADDRESS = &2EA ; Enable function at OSFILE control block workspace
 DISABLE_NULA_ADDRESS = &100+&20 ; Disable function after the palette
 STACK_TOP = &12F
+STACK_DATA = LOAD_ADDRESS + &2900
 
 .START:
 .LOAD_GAME:
@@ -66,23 +68,31 @@ STACK_TOP = &12F
     LDA #&2
     STA &33bb
 
-    ; 17 bytes available at &2EE-&2FF, OSFILE blocks
+    ; Patch game to call into the disable/enable nula code
     LDX #0
 
-.COPY_RESIDENT:
-    LDA #&EA
+.COPY_ENABLE_CODE:
+    LDA ENABLE_NULA,X
     STA ENABLE_NULA_ADDRESS,X
     INX
     CPX #21+1
-    BNE COPY_RESIDENT
+    BNE COPY_ENABLE_CODE
+    LDX #0
+    
+.COPY_PALETTE_DATA:
+    LDA PAL,X
+    STA STACK_DATA,X
+    INX
+    CPX #32
+    BNE COPY_PALETTE_DATA
+    LDX #0
 
-    ;LDA START_RESIDENT,X
-    ;STA RESIDENT_MEM,X
-    ;INX
-    ;CPX #END_RESIDENT-START_RESIDENT
-    ;BNE COPY_RESIDENT
-
-    ; Patch game to call into the disable/enable nula code
+.COPY_DISABLE_CODE:
+    LDA DISABLE_NULA,X
+    STA STACK_DATA+32,X
+    INX
+    CPX #15+1
+    BNE COPY_DISABLE_CODE
 
     ;LDA #&4C
     ;STA &2EA5
