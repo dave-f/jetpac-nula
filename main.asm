@@ -8,8 +8,8 @@ ORG &1900
 GUARD &2000
 
 ; Both these are still wrong as they are overwritten
-RESIDENT_MEM = &4980 + &20 ; after reloc (&4980 + &20) -> &30A0
-REAL_RESIDENT_MEM = &30A0 ; when we patch code, must reference it's relocated area
+RESIDENT_MEM = &100
+REAL_RESIDENT_MEM = &100
 
 .START:
 .LOAD_GAME:
@@ -65,9 +65,16 @@ REAL_RESIDENT_MEM = &30A0 ; when we patch code, must reference it's relocated ar
     LDA #&2
     STA &33bb
 
+    ; 17 bytes available at &2EE-&2FF, OSFILE blocks
     LDX #0
 
 .COPY_RESIDENT:
+    LDA #&EA
+    STA &2EE,X
+    INX
+    CPX #18
+    BNE COPY_RESIDENT
+
     ;LDA START_RESIDENT,X
     ;STA RESIDENT_MEM,X
     ;INX
@@ -140,12 +147,13 @@ REAL_RESIDENT_MEM = &30A0 ; when we patch code, must reference it's relocated ar
     INX
     CPX #30
     BNE PROGRAM_PAL
+
+.END_RESIDENT:
     RTS
 
 .PAL:
     INCBIN "bin/game.pal"
 
-.END_RESIDENT:
 .LOADER:
     EQUS "LOAD JET-PAC",13
 
