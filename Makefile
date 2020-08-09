@@ -23,7 +23,7 @@ GFX_OBJECTS := $(shell $(PNG2BBC) -l gfxscript)
 
 all: $(OUTPUT_SSD)
 
-$(OUTPUT_SSD): $(MAIN_ASM) bin/game.pal Makefile
+$(OUTPUT_SSD): $(MAIN_ASM) bin/game.pal Makefile loader.bas
 	$(BEEBASM) -i $(MAIN_ASM) -di $(GAME_SSD) -do $(OUTPUT_SSD)
 
 $(GFX_OBJECTS): gfxscript
@@ -33,7 +33,6 @@ gfx:
 	$(PNG2BBC) gfxscript
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/fuel.bin\" \"bin/fuel.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/items.bin\" \"bin/items.bbc\")"
-#	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/flames.bin\" \"bin/flames.bbc\" 1 1)"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/flames.bin\" \"bin/flames.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/mantop-l.bin\" \"bin/mantop-l.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/mantop-r.bin\" \"bin/mantop-r.bbc\")"
