@@ -25,9 +25,11 @@ STACK_DATA = LOAD_ADDRESS + &2900
     LDA #&AE
     STA &3F08
     STA &3F0A
+    STA &3D9D
     LDA #&BE
     STA &3EFC
     STA &3EFE
+    STA &3DA5
 
     ; Disable the palette reshuffle...
     ; Not sure why it does this as yet
