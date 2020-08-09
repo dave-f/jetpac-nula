@@ -5,6 +5,9 @@
 ;; This is a library for emacs which allows easy reading/writing of binary data etc, see https://github.com/rejeep/f.el
 (require 'f)
 
+;; This is modern list library, see https://github.com/magnars/dash.el
+(require 'dash)
+
 (defconst pixelValues '(#b00000000 #b00000001 #b00000100 #b00000101 #b00010000 #b00010001 #b00010100 #b00010101
                         #b01000000 #b01000001 #b01000100 #b01000101 #b01010000 #b01010001 #b01010100 #b01010101))
 
@@ -27,6 +30,21 @@
 ; 0 5 9 11
 ; 0 2 7 9
 ; 0 7 9 11
+
+; (set-colour "c:/dev/jetpac-nula/bin/game.pal" 0 70 159 139)
+
+(defun set-colour (filename colour-index red green blue)
+  "Convert an RGB (0..255) colour to NuLA format and write at `colour-index' in `filename'"
+  (let* ((file-bytes (string-to-list (f-read-bytes filename)))
+         (file-offset (* colour-index 2))
+         (new-red (round (* (/ red 255.0) 16.0)))
+         (new-green (round (* (/ green 255.0) 16.0)))
+         (new-blue (round (* (/ blue 255.0) 16.0)))
+         (byte-one (logior (lsh colour-index 4) new-red))
+         (byte-two (logior (lsh new-green 4) new-blue)))
+    (setq file-bytes (-replace-at file-offset byte-one file-bytes))
+    (setq file-bytes (-replace-at (1+ file-offset) byte-two file-bytes))
+    (f-write-bytes (apply 'unibyte-string file-bytes) (concat filename ".new"))))
 
 ; The alien graphics are stored as 2bpp, so extract their bits
 (defun grab (srcPixel pixNum)
@@ -59,8 +77,7 @@
     (cons pl pr)))
 
 (defun encode-pixel (col1 col2)
-  "Given two pixel colours, returns the corresponding Mode 2 byte"
-  )
+  "TODO Given two pixel colours, returns the corresponding Mode 2 byte")
 
 (defun reorder (src)
   (logior (grab src 'four) (lsh (grab src 'three) 2) (lsh (grab src 'two) 4) (lsh (grab src 'one) 6)))
