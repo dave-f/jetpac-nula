@@ -34,6 +34,7 @@ gfx:
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/fuel.bin\" \"bin/fuel.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/items.bin\" \"bin/items.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/flames.bin\" \"bin/flames.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/explode.bin\" \"bin/explode.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/mantop-l.bin\" \"bin/mantop-l.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/mantop-r.bin\" \"bin/mantop-r.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-l1.bin\" \"bin/manlegs-l1.bbc\")"
@@ -85,6 +86,7 @@ gfx:
 	$(SNAP) org/jet-pac bin/manlegs-r6.bbc 1600
 	$(SNAP) org/jet-pac bin/items.bbc 512
 	$(SNAP) org/jet-pac bin/flames.bbc 11776
+	$(SNAP) org/jet-pac bin/explode.bbc 12544
 #   Location of first alien
 	$(SNAP) org/jet-pac bin/test.bbc 12032
 #   Location of second alien
