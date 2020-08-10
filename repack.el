@@ -16,21 +16,45 @@
 
 ; Alien pixel data at b20
 (defconst alien-pixdata-1 '(#x00 #x40 #x11 #x41 #x80 #xC0 #x91 #xC1 #x22 #x62 #x33 #x63 #x82 #xC2 #x93 #xc3))
-(defconst alien-pixdata-2 '(#x00 #x15 #x40 #x05 #x3a #x3f #x6a #x2f #x80 #x95 #xc0 #x85 #x0a #x1f #x4a #x0f))
+(defconst alien-pixdata-2 '(#x00 #x15 #x40 #x05 #x3a #x3f #x6a #x2f #x80 #x95 #xc0 #x85 #x0a #x1f #x4a #x0f)) ; is 4th entry wrong? -> 3a should be 2a?
 (defconst alien-pixdata-3 '(#x00 #x44 #x05 #x41 #x88 #xcc #x8d #xc9 #x0a #x4e #x0f #x4b #x82 #xc6 #x87 #xc3))
 (defconst alien-pixdata-4 '(#x00 #x11 #x41 #x45 #x22 #x33 #x63 #x67 #x82 #x93 #xc3 #xc7 #x8a #x9b #xcb #xcf))
 (defconst alien-pixdata-5 '(#x00 #x04 #x41 #x15 #x08 #x0c #x49 #x1d #x82 #x86 #xc3 #x97 #x2a #x2e #x6b #x3f))
 (defconst alien-pixdata-6 '(#x00 #x15 #x45 #x41 #x2a #x3f #x6f #x6b #x8a #x9f #xcf #xcb #x82 #x97 #xc7 #xc3))
 
-; (cl-loop for i in alien-pixdata-1 collect (decode-pixel i))
+(defun to-binary-string (i)
+  "convert an integer into it's binary representation in string format"
+  (let ((res ""))
+    (while (not (= i 0))
+      (setq res (concat (if (= 1 (logand i 1)) "1" "0") res))
+      (setq i (lsh i -1)))
+    (if (string= res "")
+        (setq res "0"))
+    res))
 
-; 0 5 8 9
-; 0 3 7 8 
-; 0 3 9 10
-; 0 5 9 11
-; 0 2 7 9
-; 0 7 9 11
-
+(defun show-alien-colours ()
+  (interactive)
+  (switch-to-buffer (get-buffer-create "*aliens*"))
+  (erase-buffer)
+  (cl-loop for i from 0 to 15 collect
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-1))) "\n"))
+  (insert "\n")
+  (cl-loop for i from 0 to 15 collect
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-2))) "\n"))
+  (insert "\n")
+  (cl-loop for i from 0 to 15 collect
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-3))) "\n"))
+  (insert "\n")
+  (cl-loop for i from 0 to 15 collect
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-4))) "\n"))
+  (insert "\n")
+  (cl-loop for i from 0 to 15 collect
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-5))) "\n"))
+  (insert "\n")
+  (cl-loop for i from 0 to 15 collect
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-6))) "\n"))
+  (insert "\n"))
+         
 ; (set-colour "c:/dev/jetpac-nula/bin/game.pal" 0 70 159 139)
 
 (defun set-colour (filename colour-index red green blue)
