@@ -14,7 +14,22 @@ DISABLE_NULA_ADDRESS = &100+&20 ; Disable function after the palette
 STACK_TOP = &12F
 STACK_DATA = LOAD_ADDRESS + &2900
 
+; TODO - Read values passed in from BASIC loader
+
 .START:
+    LDA #0
+    LDX #0
+    CLC
+    SED
+
+.BCDLOOP:
+    ADC #1
+    INX
+    CPX #42
+    BNE BCDLOOP
+    CLD
+    STA &70
+
 .LOAD_GAME:
     LDX #LO(LOADER)
     LDY #HI(LOADER)
