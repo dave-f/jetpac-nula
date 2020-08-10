@@ -14,21 +14,19 @@ DISABLE_NULA_ADDRESS = &100+&20 ; Disable function after the palette
 STACK_TOP = &12F
 STACK_DATA = LOAD_ADDRESS + &2900
 
-; TODO - Read values passed in from BASIC loader
-
 .START:
     LDA #0
-    LDX #0
+    TAX
     CLC
     SED
 
 .BCDLOOP:
     ADC #1
     INX
-    CPX #42
+    CPX &70
     BNE BCDLOOP
     CLD
-    STA &70
+    STA LIVES+1
 
 .LOAD_GAME:
     LDX #LO(LOADER)
@@ -66,7 +64,8 @@ STACK_DATA = LOAD_ADDRESS + &2900
     ; LDA #&90
     ; STA &447e
 
-    ; Give us 99 lives, for player 1 and player 2
+    ; Give us 99 lives, for player 1 and player 2.
+.LIVES:
     LDA #&99
     STA &307B
     STA &308C
