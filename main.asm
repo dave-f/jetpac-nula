@@ -134,6 +134,24 @@ STACK_DATA = LOAD_ADDRESS + &2900
     LDA #HI(DISABLE_NULA_ADDRESS)
     STA &4A45
 
+    ; Congratulations, you are .. (high score entry)
+    LDA #LO(&1CC2)
+    STA &359A
+    LDA #HI(&1CC2)
+    STA &359B
+    LDA #&20
+    STA &35C2
+    LDA #LO(DISABLE_NULA_ADDRESS+3)
+    STA &35C3
+    LDA #HI(DISABLE_NULA_ADDRESS+3) ; skip jsr &ffee
+    STA &35C4
+    LDA #&4C
+    STA &35C5
+    LDA #LO(&1CCA)
+    STA &35C6
+    LDA #HI(&1CCA)
+    STA &35C7
+
     ; Patch title
     LDX #0
 
