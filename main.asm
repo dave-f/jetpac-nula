@@ -171,7 +171,7 @@ STACK_DATA = LOAD_ADDRESS + &2900
     INCBIN "bin/game.pal"
 
 .LOADER:
-    EQUS "LOAD JET-PAC",13
+    EQUS "LOAD JetNla",13
 
 .TITLESTR:
     ;EQUS "......JET-PAC Selection Page"
@@ -182,8 +182,8 @@ STACK_DATA = LOAD_ADDRESS + &2900
     PRINT "Bytes used: ",END-START
     PRINT "Bytes used for enable code: ", PAL-ENABLE_NULA, "Available: ", &2FF-ENABLE_NULA_ADDRESS
     PRINT "Bytes used for disable code: ", ENABLE_NULA-DISABLE_NULA, "Available: ", (STACK_TOP-&100)-32
-    PUTFILE "org/jet-ldr","jet-ldr",&1900,&8023
-    PUTFILE "org/jetpac","jetpac",&5C00,&6000
-    PUTFILE "org/jet-pac","jet-pac",&2000,&5900
-    PUTBASIC "loader.bas","loader"
-    SAVE "test",START,END
+
+    PUTFILE "org/jet-pac","JetPac",&2000,&5900
+    PUTFILE "bin/jet-pac-nula","JetNla",&2000,&5900
+    PUTBASIC "loader.bas","Loader"
+    SAVE "JetNula",START,END

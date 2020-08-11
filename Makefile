@@ -68,29 +68,29 @@ gfx:
 #	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-r5.bin\" \"bin/manlegs-r5.bbc\" 3 3)"
 #	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(fill-graphic-with-colours \"bin/manlegs-r6.bin\" \"bin/manlegs-r6.bbc\" 3 3)"
 
-	$(SNAP) org/jet-pac bin/platform.bin 7680
-	$(SNAP) org/jet-pac bin/fuel.bbc 1152
-	$(SNAP) org/jet-pac bin/mantop-l.bbc 11648
-	$(SNAP) org/jet-pac bin/mantop-r.bbc 11520
-	$(SNAP) org/jet-pac bin/manlegs-l1.bbc 1664
-	$(SNAP) org/jet-pac bin/manlegs-l2.bbc 1728
-	$(SNAP) org/jet-pac bin/manlegs-l3.bbc 1792
-	$(SNAP) org/jet-pac bin/manlegs-l4.bbc 1856
-	$(SNAP) org/jet-pac bin/manlegs-l5.bbc 1920
-	$(SNAP) org/jet-pac bin/manlegs-l6.bbc 1984
-	$(SNAP) org/jet-pac bin/manlegs-r1.bbc 1280
-	$(SNAP) org/jet-pac bin/manlegs-r2.bbc 1344
-	$(SNAP) org/jet-pac bin/manlegs-r3.bbc 1408
-	$(SNAP) org/jet-pac bin/manlegs-r4.bbc 1472
-	$(SNAP) org/jet-pac bin/manlegs-r5.bbc 1536
-	$(SNAP) org/jet-pac bin/manlegs-r6.bbc 1600
-	$(SNAP) org/jet-pac bin/items.bbc 512
-	$(SNAP) org/jet-pac bin/flames.bbc 11776
-	$(SNAP) org/jet-pac bin/explode.bbc 12544
+	$(SNAP) org/jet-pac bin/platform.bin 7680 bin/jet-pac-nula
+	$(SNAP) bin/jet-pac-nula bin/fuel.bbc 1152
+	$(SNAP) bin/jet-pac-nula bin/mantop-l.bbc 11648
+	$(SNAP) bin/jet-pac-nula bin/mantop-r.bbc 11520
+	$(SNAP) bin/jet-pac-nula bin/manlegs-l1.bbc 1664
+	$(SNAP) bin/jet-pac-nula bin/manlegs-l2.bbc 1728
+	$(SNAP) bin/jet-pac-nula bin/manlegs-l3.bbc 1792
+	$(SNAP) bin/jet-pac-nula bin/manlegs-l4.bbc 1856
+	$(SNAP) bin/jet-pac-nula bin/manlegs-l5.bbc 1920
+	$(SNAP) bin/jet-pac-nula bin/manlegs-l6.bbc 1984
+	$(SNAP) bin/jet-pac-nula bin/manlegs-r1.bbc 1280
+	$(SNAP) bin/jet-pac-nula bin/manlegs-r2.bbc 1344
+	$(SNAP) bin/jet-pac-nula bin/manlegs-r3.bbc 1408
+	$(SNAP) bin/jet-pac-nula bin/manlegs-r4.bbc 1472
+	$(SNAP) bin/jet-pac-nula bin/manlegs-r5.bbc 1536
+	$(SNAP) bin/jet-pac-nula bin/manlegs-r6.bbc 1600
+	$(SNAP) bin/jet-pac-nula bin/items.bbc 512
+	$(SNAP) bin/jet-pac-nula bin/flames.bbc 11776
+	$(SNAP) bin/jet-pac-nula bin/explode.bbc 12544
 #   Location of first alien
-	$(SNAP) org/jet-pac bin/test.bbc 12032
+	$(SNAP) bin/jet-pac-nula bin/test.bbc 12032
 #   Location of second alien
-#	$(SNAP) org/jet-pac bin/test.bbc 12416
+#	$(SNAP) bin/jet-pac-nula bin/test.bbc 12416
 
 clean:
 	$(RM) $(OUTPUT_SSD)
