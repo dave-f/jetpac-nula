@@ -3316,7 +3316,7 @@
 3505   69 20       ADC #&20
 3507   a8          TAY 
 3508   d0 e1       BNE -31       34eb
-350a   a9 16       LDA #&16
+350a   a9 16       LDA #&16                     ; &1c0a relocated
 350c   20 ee ff    JSR &ffee
 350f   a9 07       LDA #&07
 3511   20 ee ff    JSR &ffee                    ; Mode 7 for game over display
@@ -3406,28 +3406,28 @@
 35bd   20 3e 17    JSR &173e
 35c0   68          PLA 
 35c1   60          RTS 
-35c2   ea          NOP 
+35c2   ea          NOP
 35c3   ea          NOP 
 35c4   ea          NOP 
 35c5   ea          NOP 
 35c6   ea          NOP 
 35c7   60          RTS 
 35c8   05 60       ORA &60
-35ca   a2 00       LDX #&00
-35cc   bd 9b 13    LDA &139b,X
+35ca   a2 00       LDX #&00                     ; &1cca relocated, display "congratulations" message
+35cc   bd 9b 13    LDA &139b,X                  ; This contains a sneaky mode 7
 35cf   c9 0d       CMP #&0d
 35d1   f0 1f       BEQ  31       35f2
 35d3   20 ee ff    JSR &ffee
 35d6   e0 05       CPX #&05
 35d8   90 15       BCC  21       35ef
-35da   a9 0a       LDA #&0a
-35dc   20 ee ff    JSR &ffee
+35da   a9 0a       LDA #&0a                     ; think all this moving the cursor lark is to display 
+35dc   20 ee ff    JSR &ffee                    ; the "congratulations" text in double height
 35df   a9 08       LDA #&08
 35e1   20 ee ff    JSR &ffee
 35e4   bd 9b 13    LDA &139b,X
 35e7   20 ee ff    JSR &ffee
 35ea   a9 0b       LDA #&0b
-35ec   20 ee ff    JSR &ffee
+35ec   20 ee ff    JSR &ffee                    ; here?
 35ef   e8          INX 
 35f0   d0 da       BNE -38       35cc
 35f2   20 15 1d    JSR &1d15
