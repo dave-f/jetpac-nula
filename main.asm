@@ -15,6 +15,23 @@ STACK_TOP = &12F
 STACK_DATA = LOAD_ADDRESS + &2900
 
 .START:
+    ; Check to see if we are using the NuLA version
+    LDA &72
+    BEQ LOAD_NORMAL
+
+.LOAD_NULA:
+    LDX #LO(LOADER_NULA)
+    LDY #HI(LOADER_NULA)
+    JMP DO_LOAD
+
+.LOAD_NORMAL:
+    LDX #LO(LOADER_NORMAL)
+    LDY #HI(LOADER_NORMAL)
+
+.DO_LOAD:
+    JSR &FFF7
+
+    ; Now patch the lives
     LDA #0
     TAX
     CLC
@@ -28,13 +45,11 @@ STACK_DATA = LOAD_ADDRESS + &2900
     CLD
     STA LIVES+1
 
-.LOAD_GAME:
-    LDX #LO(LOADER)
-    LDY #HI(LOADER)
-    JSR &FFF7
+    ; Check to see if we are remapping keys
+    LDA &71
+    BEQ LIVES
 
     ; Patch the game to use A/S keys
-.PATCH_GAME:
     LDA #&AE
     STA &3F08
     STA &3F0A
@@ -43,6 +58,12 @@ STACK_DATA = LOAD_ADDRESS + &2900
     STA &3EFC
     STA &3EFE
     STA &3DA5
+
+    ; Give us 99 lives, for player 1 and player 2.
+.LIVES:
+    LDA #&99
+    STA &307B
+    STA &308C
 
     ; Disable the palette reshuffle...
     ; Not sure why it does this as yet
@@ -63,12 +84,6 @@ STACK_DATA = LOAD_ADDRESS + &2900
     ; STA &448B
     ; LDA #&90
     ; STA &447e
-
-    ; Give us 99 lives, for player 1 and player 2.
-.LIVES:
-    LDA #&99
-    STA &307B
-    STA &308C
 
     ; Change text colours on the score display
     LDA #&07
@@ -188,8 +203,11 @@ STACK_DATA = LOAD_ADDRESS + &2900
 .PAL:
     INCBIN "bin/game.pal"
 
-.LOADER:
+.LOADER_NULA:
     EQUS "LOAD JetNla",13
+
+.LOADER_NORMAL:
+    EQUS "LOAD JetPAc",13
 
 .TITLESTR:
     ;EQUS "......JET-PAC Selection Page"
