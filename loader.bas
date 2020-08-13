@@ -16,7 +16,6 @@ NULA%=E%/G%>0.75
 MODE7
 *FX4,2
 IF NULA% PRINT "NuLA detected!" ELSE PRINT "No NuLA detected!"
-IF NULA% ?&72=1 ELSE ?&72=0
 INPUT "Number of lives (1-99)",LIVES%
 PRINT "Remap CAPS/CTRL to A/S (Yes/No)?";
 *FX15
@@ -25,6 +24,7 @@ IF A$<>"Y" AND A$<>"y" AND A$<>"N" AND A$<>"n" GOTO 21
 IF A$="Y" OR A$="y" THEN PRINT "Yes" ELSE PRINT "No"
 ?&70 = FNCLAMP(LIVES%)
 IF A$="Y" OR A$="y" THEN ?&71=1 ELSE ?&71=0
+IF NULA% ?&72=1 ELSE ?&72=0
 PRINT "Loading..."
 CLOSE #0
 *RUN JetNula
