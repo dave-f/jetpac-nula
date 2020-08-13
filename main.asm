@@ -1,8 +1,5 @@
-; Placeholder assembly file
-; 14 July 2020
-;
-; .. Eventually some NuLA setup code will need calling from Jet-Pac
-; .. Perhaps store at &100.
+; Jet-Pac : NuLA refuel
+; 14 July -- 14 August 2020
 
 ORG &1900
 GUARD &2000
@@ -213,7 +210,7 @@ STACK_DATA = LOAD_ADDRESS + &2900
     EQUS "LOAD JetNla",13
 
 .LOADER_NORMAL:
-    EQUS "LOAD JetPAc",13
+    EQUS "LOAD JetPac",13
 
 .TITLESTR:
     ;EQUS "......JET-PAC Selection Page"
