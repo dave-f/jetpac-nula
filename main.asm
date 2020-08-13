@@ -65,6 +65,12 @@ STACK_DATA = LOAD_ADDRESS + &2900
     STA &307B
     STA &308C
 
+    ; Jump straight to game if we are not on NuLA
+    LDA &72
+    BNE NULA_PATCH
+    JMP &5900
+
+.NULA_PATCH:
     ; Disable the palette reshuffle...
     ; Not sure why it does this as yet
     LDA #&EA
