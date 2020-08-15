@@ -32,27 +32,31 @@
         (setq res "0"))
     res))
 
+(defun split-number(arg)
+  "split a 4 bit number to its 2 values"
+  (concat (number-to-string (lsh arg -2)) "," (number-to-string (logand arg 3))))
+
 (defun show-alien-colours ()
   (interactive)
   (switch-to-buffer (get-buffer-create "*aliens*"))
   (erase-buffer)
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-1))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-1))) "\n"))
   (insert "\n")
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-2))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-2))) "\n"))
   (insert "\n")
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-3))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-3))) "\n"))
   (insert "\n")
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-4))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-4))) "\n"))
   (insert "\n")
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-5))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-5))) "\n"))
   (insert "\n")
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-6))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-6))) "\n"))
   (insert "\n"))
          
 ; (set-colour "c:/dev/jetpac-nula/bin/game.pal" 0 70 159 139)
