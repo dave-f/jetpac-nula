@@ -50,6 +50,7 @@ gfx:
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r5.bin\" \"bin/manlegs-r5.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r6.bin\" \"bin/manlegs-r6.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/test.bin\" \"bin/test.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(create-new-alien-colour-tables \"bin/aliencol.bin\")"
 
 #   Used to test player collision
 #   -----------------------------
@@ -87,6 +88,8 @@ gfx:
 	$(SNAP) bin/jet-pac-nula bin/items.bbc 512
 	$(SNAP) bin/jet-pac-nula bin/flames.bbc 11776
 	$(SNAP) bin/jet-pac-nula bin/explode.bbc 12544
+#   Patch alien colour table
+#	$(SNAP) bin/jet-pac-nula bin/aliencol.bin 1056
 #   Location of first alien
 	$(SNAP) bin/jet-pac-nula bin/test.bbc 12032
 #   Location of second alien
@@ -94,7 +97,7 @@ gfx:
 
 clean:
 	$(RM) $(OUTPUT_SSD)
-	$(RM) bin\*.*
+	$(RM) /Q bin\*.*
 
 run:
 	$(BEEBEM) $(BEEBEM_FLAGS) $(OUTPUT_SSD)
