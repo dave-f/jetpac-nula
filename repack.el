@@ -5,7 +5,7 @@
 ;; This is a library for emacs which allows easy reading/writing of binary data etc, see https://github.com/rejeep/f.el
 (require 'f)
 
-;; This is modern list library, see https://github.com/magnars/dash.el
+;; This is a modern list library, see https://github.com/magnars/dash.el
 (require 'dash)
 
 (defconst pixelValues '(#b00000000 #b00000001 #b00000100 #b00000101 #b00010000 #b00010001 #b00010100 #b00010101
@@ -14,13 +14,21 @@
 (defconst pixelLeft  '#b10101010)
 (defconst pixelRight '#b01010101)
 
-; Alien pixel data at b20
+; Alien pixel data stored at 0xB20 in BBC memory, at 0x420 in "jet-pac" file
 (defconst alien-pixdata-1 '(#x00 #x40 #x11 #x41 #x80 #xC0 #x91 #xC1 #x22 #x62 #x33 #x63 #x82 #xC2 #x93 #xc3))
 (defconst alien-pixdata-2 '(#x00 #x15 #x40 #x05 #x3a #x3f #x6a #x2f #x80 #x95 #xc0 #x85 #x0a #x1f #x4a #x0f)) ; is 4th entry wrong? -> 3a should be 2a?
 (defconst alien-pixdata-3 '(#x00 #x44 #x05 #x41 #x88 #xcc #x8d #xc9 #x0a #x4e #x0f #x4b #x82 #xc6 #x87 #xc3))
 (defconst alien-pixdata-4 '(#x00 #x11 #x41 #x45 #x22 #x33 #x63 #x67 #x82 #x93 #xc3 #xc7 #x8a #x9b #xcb #xcf))
 (defconst alien-pixdata-5 '(#x00 #x04 #x41 #x15 #x08 #x0c #x49 #x1d #x82 #x86 #xc3 #x97 #x2a #x2e #x6b #x3f))
 (defconst alien-pixdata-6 '(#x00 #x15 #x45 #x41 #x2a #x3f #x6f #x6b #x8a #x9f #xcf #xcb #x82 #x97 #xc7 #xc3))
+
+; New alien pixel data to overwrite the existing one so Chris can have colour 1 constant
+(defconst alien-pixdata-1-new (create-alien-colour-lookup '(0 1 8 9)))
+(defconst alien-pixdata-2-new (create-alien-colour-lookup '(0 1 10 11)))
+(defconst alien-pixdata-3-new (create-alien-colour-lookup '(0 1 8 10)))
+(defconst alien-pixdata-4-new (create-alien-colour-lookup '(0 1 9 10)))
+(defconst alien-pixdata-5-new (create-alien-colour-lookup '(0 1 8 11)))
+(defconst alien-pixdata-6-new (create-alien-colour-lookup '(0 1 9 11)))
 
 (defun to-binary-string (i)
   "convert an integer into it's binary representation in string format"
@@ -41,23 +49,43 @@
   (switch-to-buffer (get-buffer-create "*aliens*"))
   (erase-buffer)
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-1))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-1))) (cdr (decode-pixel (nth i alien-pixdata-1)))) " -> (new) -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-1-new))) (cdr (decode-pixel (nth i alien-pixdata-1-new)))) "\n"))
   (insert "\n")
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-2))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-2))) (cdr (decode-pixel (nth i alien-pixdata-2)))) " -> (new) -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-2-new))) (cdr (decode-pixel (nth i alien-pixdata-2-new)))) "\n"))
   (insert "\n")
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-3))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-3))) (cdr (decode-pixel (nth i alien-pixdata-3)))) " -> (new) -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-3-new))) (cdr (decode-pixel (nth i alien-pixdata-3-new)))) "\n"))
   (insert "\n")
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-4))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-4))) (cdr (decode-pixel (nth i alien-pixdata-4)))) " -> (new) -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-4-new))) (cdr (decode-pixel (nth i alien-pixdata-4-new)))) "\n"))
   (insert "\n")
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-5))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-5))) (cdr (decode-pixel (nth i alien-pixdata-5)))) " -> (new) -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-5-new))) (cdr (decode-pixel (nth i alien-pixdata-5-new)))) "\n"))
   (insert "\n")
   (cl-loop for i from 0 to 15 collect
-         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " (prin1-to-string (decode-pixel (nth i alien-pixdata-6))) "\n"))
+         (insert (replace-regexp-in-string " " "0" (format "%4s" (to-binary-string i))) " (" (split-number i) ") -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-6))) (cdr (decode-pixel (nth i alien-pixdata-6)))) " -> (new) -> " 
+                 (format "(%02d . %02d)" (car (decode-pixel (nth i alien-pixdata-6-new))) (cdr (decode-pixel (nth i alien-pixdata-6-new)))) "\n"))
   (insert "\n"))
+
+(defun create-alien-colour-lookup(colours)
+  "Create a new 16 byte colour table"
+  (cl-loop for i from 0 to 15 collect
+           (let* ((l (lsh i -2))
+                  (r (logand i 3))
+                  (final (encode-pixel (nth l colours) (nth r colours))))
+             final)))
          
 ; (set-colour "c:/dev/jetpac-nula/bin/game.pal" 0 70 159 139)
 
@@ -104,8 +132,9 @@
          (pr (logior (logand r #b1) (logand (lsh r -1) #b10) (logand (lsh r -2) #b100) (logand (lsh r -3) #b1000))))
     (cons pl pr)))
 
-(defun encode-pixel (col1 col2)
-  "TODO Given two pixel colours, returns the corresponding Mode 2 byte")
+(defun encode-pixel (left right)
+  "Given two pixel colours, returns the corresponding Mode 2 byte"
+  (logior (lsh (nth left pixelValues) 1) (nth right pixelValues)))
 
 (defun reorder (src)
   (logior (grab src 'four) (lsh (grab src 'three) 2) (lsh (grab src 'two) 4) (lsh (grab src 'one) 6)))
@@ -143,3 +172,9 @@
     (cl-loop for i downfrom (- 64 4) to 0 by 4 do
              (setq act-bytes (nconc act-bytes (cl-subseq new-bytes i (+ i 4)))))
     (f-write-bytes (apply 'unibyte-string act-bytes) dst)))
+
+(defun create-new-alien-colour-tables()
+  "Create our new look up tables"
+  (create-alien-colour-lookup '(0 1 8 9))
+  (create-alien-colour-lookup '(0 1 8 10))) ; etc
+  
