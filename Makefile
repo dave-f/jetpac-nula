@@ -89,7 +89,7 @@ gfx:
 	$(SNAP) bin/jet-pac-nula bin/flames.bbc 11776
 	$(SNAP) bin/jet-pac-nula bin/explode.bbc 12544
 #   Patch alien colour table
-#	$(SNAP) bin/jet-pac-nula bin/aliencol.bin 1056
+	$(SNAP) bin/jet-pac-nula bin/aliencol.bin 1056
 #   Location of first alien
 	$(SNAP) bin/jet-pac-nula bin/test.bbc 12032
 #   Location of second alien
