@@ -11,6 +11,7 @@ BEEBASM      := ../beebasm/beebasm.exe
 GAME_SSD     := res/blank.ssd
 OUTPUT_SSD   := jetpac-nula.ssd
 MAIN_ASM     := main.asm
+LOGO_ASM     := logo.asm
 RM           := del
 
 #
@@ -23,7 +24,7 @@ GFX_OBJECTS := $(shell $(PNG2BBC) -l gfxscript)
 
 all: $(OUTPUT_SSD)
 
-$(OUTPUT_SSD): $(MAIN_ASM) bin/game.pal Makefile loader.bas
+$(OUTPUT_SSD): $(MAIN_ASM) $(LOGO_ASM) bin/game.pal Makefile loader.bas
 	$(BEEBASM) -i $(MAIN_ASM) -di $(GAME_SSD) -do $(OUTPUT_SSD)
 
 $(GFX_OBJECTS): gfxscript
