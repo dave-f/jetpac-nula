@@ -225,4 +225,5 @@ STACK_DATA = LOAD_ADDRESS + &2900
     PUTFILE "org/jet-pac","JetPac",&2000,&5900
     PUTFILE "bin/jet-pac-nula","JetNla",&2000,&5900
     PUTBASIC "loader.bas","Loader"
+    PUTFILE "bin/logo.bin","JetPic",&3000,&3000
     SAVE "JetNula",START,END
