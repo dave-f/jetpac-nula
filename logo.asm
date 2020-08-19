@@ -22,6 +22,8 @@
     DEY
     CPY #0
     BNE INNERLINELOOP
+    LDA #19
+    JSR &FFF4
     PLA
     TAY
     LDA &70
