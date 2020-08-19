@@ -93,8 +93,8 @@ gfx:
 	$(SNAP) bin/jet-pac-nula bin/aliencol.bin 1056
 #   Location of first alien
 	$(SNAP) bin/jet-pac-nula bin/test.bbc 12032
-#   Location of second alien
-#	$(SNAP) bin/jet-pac-nula bin/test.bbc 12416
+#   Location of second alien, 64 bytes on
+#	$(SNAP) bin/jet-pac-nula bin/test.bbc 12096
 
 clean:
 	$(RM) $(OUTPUT_SSD)
