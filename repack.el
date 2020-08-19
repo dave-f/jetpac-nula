@@ -176,10 +176,10 @@
 (defconst alien-pixdata-6 '(#x00 #x15 #x45 #x41 #x2a #x3f #x6f #x6b #x8a #x9f #xcf #xcb #x82 #x97 #xc7 #xc3))
 
 ; New alien pixel data to overwrite the existing one so Chris can have colour 1 constant
-(defconst alien-pixdata-1-new (create-alien-colour-lookup '(0 1 8 9)))
-(defconst alien-pixdata-2-new (create-alien-colour-lookup '(0 1 10 11)))
-(defconst alien-pixdata-3-new (create-alien-colour-lookup '(0 1 8 10)))
-(defconst alien-pixdata-4-new (create-alien-colour-lookup '(0 1 9 10)))
-(defconst alien-pixdata-5-new (create-alien-colour-lookup '(0 1 8 11)))
-(defconst alien-pixdata-6-new (create-alien-colour-lookup '(0 1 9 11)))
+(defconst alien-pixdata-1-new (create-alien-colour-lookup '(0 6 8 9)))
+(defconst alien-pixdata-2-new (create-alien-colour-lookup '(0 6 10 11)))
+(defconst alien-pixdata-3-new (create-alien-colour-lookup '(0 6 8 10)))
+(defconst alien-pixdata-4-new (create-alien-colour-lookup '(0 6 9 10)))
+(defconst alien-pixdata-5-new (create-alien-colour-lookup '(0 6 8 11)))
+(defconst alien-pixdata-6-new (create-alien-colour-lookup '(0 6 9 11)))
 
