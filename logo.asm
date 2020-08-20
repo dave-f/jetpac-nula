@@ -82,7 +82,7 @@
     RTS
 
 .LOGO:
-    INCBIN "bin/logo.bin"
+    ;INCBIN "bin/logo.bin"
 
 .TABLE:
     FOR I,0,255

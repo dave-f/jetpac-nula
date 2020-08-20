@@ -50,7 +50,8 @@ gfx:
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r4.bin\" \"bin/manlegs-r4.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r5.bin\" \"bin/manlegs-r5.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r6.bin\" \"bin/manlegs-r6.bbc\")"
-	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/test.bin\" \"bin/test.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien1.bin\" \"bin/alien1.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien2.bin\" \"bin/alien2.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(create-new-alien-colour-tables \"bin/aliencol.bin\")"
 
 #   Used to test player collision
@@ -92,9 +93,9 @@ gfx:
 #   Patch alien colour table
 	$(SNAP) bin/jet-pac-nula bin/aliencol.bin 1056
 #   Location of first alien
-	$(SNAP) bin/jet-pac-nula bin/test.bbc 12032
+	$(SNAP) bin/jet-pac-nula bin/alien1.bbc 12032
 #   Location of second alien, 64 bytes on
-#	$(SNAP) bin/jet-pac-nula bin/test.bbc 12096
+	$(SNAP) bin/jet-pac-nula bin/alien2.bbc 12096
 
 clean:
 	$(RM) $(OUTPUT_SSD)
