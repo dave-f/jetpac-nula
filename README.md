@@ -17,7 +17,7 @@ To build and apply the patch you'll need these tools:
 * [beebasm](https://github.com/stardot/beebasm)
 * [png2bbc](https://github.com/dave-f/png2bbc)
 * [snap](https://github.com/dave-f/snap)
-* [emacs](https://emacs.org)
+* [emacs](https://www.gnu.org/software/emacs)
 
 Emacs Lisp is used as a scripting language to post-process some of the graphics, make tables etc. mainly because I use Emacs heavily so this was at my fingertips already.  The `repack.el` file drives all this, and requires 2 other packages to be installed (see comments in the file).
 
