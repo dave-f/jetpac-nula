@@ -13,6 +13,7 @@ OUTPUT_SSD   := jetpac-nula.ssd
 MAIN_ASM     := main.asm
 LOGO_ASM     := logo.asm
 RM           := del
+CP           := copy
 
 #
 # Generated graphics
@@ -53,6 +54,9 @@ gfx:
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien1.bin\" \"bin/alien1.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien2.bin\" \"bin/alien2.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(create-new-alien-colour-tables \"bin/aliencol.bin\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(set-colour \"bin/game.pal\" 0 12 20 30)"
+	$(CP) bin\game.pal.new bin\game.pal
+	$(RM) bin\game.pal.new
 
 #   Used to test player collision
 #   -----------------------------
