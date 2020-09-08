@@ -2,11 +2,11 @@
 
 A VideoNuLA version of the classic BBC Micro game.  Features reworked graphics for:
 
-* Player sprite
+* Player
 * Fuel pod
 * Platforms
-* All items
-* All aliens
+* Items
+* Aliens
 
 The rockets are left alone because I felt these were so iconic to the game.
 
