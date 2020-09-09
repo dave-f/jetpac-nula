@@ -32,7 +32,10 @@ CREATE-FILE bin/explode.bin FROM-DATA 0 104 16 16 8 DATA-ORDER LINE
 
 ; Title
 
-; CREATE-FILE bin/logo.bin FROM-DATA 0 128 128 32 1 DATA-ORDER LINE
+MODE 2
+COLOURS BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE
+CREATE-NULA-PALETTE bin/logo.pal FROM-DATA 0 144 COUNT 15
+CREATE-FILE bin/logo.bin FROM-DATA 0 160 128 56 1 DATA-ORDER LINE
 
 ; The aliens are stored as 2bpp, so we write them out as mode 1,
 ; then reorder prior to patching them into the game
