@@ -28,6 +28,16 @@
   "split a 4 bit number to its 2 values"
   (concat (number-to-string (lsh arg -2)) "," (number-to-string (logand arg 3))))
 
+(defun create-basic-nula-palette(filename)
+  "create a buffer containing codes to set up the NuLA palette from basic"
+  (interactive "fPalette file:")
+  (switch-to-buffer (get-buffer-create "*palette*"))
+  (erase-buffer)
+  (let* ((file-bytes (string-to-list (f-read-bytes filename))))
+    (message "length %d" (length file-bytes))
+    (cl-loop for i from 0 to (1- (length file-bytes)) by 2 do
+             (insert (format "?&FE23=&%X : ?&FE23=&%X\n" (nth i file-bytes) (nth (1+ i) file-bytes))))))
+
 (defun show-alien-colours ()
   (interactive)
   (switch-to-buffer (get-buffer-create "*aliens*"))
