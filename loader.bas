@@ -13,18 +13,25 @@ E%=FNTM(5)
 *FX19
 G%=FNTM(5)
 NULA%=E%/G%>0.75
-MODE7
+MODE2
+REM VDU 23;8202;0;0;0
 *FX4,2
-IF NULA% PRINT "NuLA detected!" ELSE PRINT "No NuLA detected!"
-INPUT "Number of lives (1-99)",LIVES%
-PRINT "Remap CAPS/CTRL to A/S (Yes/No)?";
+PROCPAL
+*LOAD JETPIC
+*LOAD LOGO
+CALL &900
+REM VDU 23;8202;0;0;0
+*FX15
+INPUT TAB(0,18) "Lives (1-99)",LIVES%
+PRINT "A/S keys (Y/N)?";
 *FX15
 A$=GET$
-IF A$<>"Y" AND A$<>"y" AND A$<>"N" AND A$<>"n" GOTO 21
+IF A$<>"Y" AND A$<>"y" AND A$<>"N" AND A$<>"n" GOTO 27 : REM !!!!!!
 IF A$="Y" OR A$="y" THEN PRINT "Yes" ELSE PRINT "No"
 ?&70 = FNCLAMP(LIVES%)
 IF A$="Y" OR A$="y" THEN ?&71=1 ELSE ?&71=0
 IF NULA% ?&72=1 ELSE ?&72=0
+MODE 7
 PRINT "Loading..."
 CLOSE #0
 *RUN JetNula
@@ -33,3 +40,21 @@ DEFFNTM(N%):LOCALI%,T%:TIME=0:FORI%=1TON%:*FX19
 NEXT:T%=TIME:=T%
 DEFFNCLAMP(N%):IF N%<1 THEN N%=1 ELSE IF N%>99 THEN N%=99
 =N%
+DEFPROCPAL
+?&FE23=&0  : ?&FE23=&0
+?&FE23=&19 : ?&FE23=&16
+?&FE23=&2D : ?&FE23=&8C
+?&FE23=&3C : ?&FE23=&CC
+?&FE23=&43 : ?&FE23=&32
+?&FE23=&5B : ?&FE23=&17
+?&FE23=&6C : ?&FE23=&3B
+?&FE23=&7D : ?&FE23=&6C
+?&FE23=&8F : ?&FE23=&DF
+?&FE23=&97 : ?&FE23=&15
+?&FE23=&AB : ?&FE23=&10
+?&FE23=&BC : ?&FE23=&61
+?&FE23=&CE : ?&FE23=&A1
+?&FE23=&DF : ?&FE23=&C5
+?&FE23=&E0 : ?&FE23=&0
+?&FE23=&F0 : ?&FE23=&0
+ENDPROC

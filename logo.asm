@@ -1,15 +1,18 @@
 ; Jet-Pac  :  NuLA refuel
 ;  Mockup start-up logo
 
+LOGO_ADDR=&1C00
+
 {
+.LOGOSTART:
     LDA #22
     JSR &FFEE
     LDA #2
     JSR &FFEE
 
-    LDA #LO(LOGO)
+    LDA #LO(LOGO_ADDR)
     STA &70
-    LDA #HI(LOGO)
+    LDA #HI(LOGO_ADDR)
     STA &71
     LDY #127 ; bottom line first
 
@@ -35,7 +38,7 @@
 
 .SKIPA:
     DEY
-    CPY #(127-32)
+    CPY #(127-56)
     BNE DAVELOOP
 
 .END:
@@ -81,11 +84,12 @@
     PLA
     RTS
 
-.LOGO:
-    ;INCBIN "bin/logo.bin"
-
 .TABLE:
     FOR I,0,255
       EQUW (&3000 + ((I DIV 8) * &280) + (I MOD 8)) + 8 * 8
     NEXT
+.LOGOEND:
+    PRINT "Logo size:", LOGOEND-LOGOSTART
 }
+
+PUTFILE "bin/logo.bin","JetPic",&1C00,&1C00
