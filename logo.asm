@@ -1,7 +1,7 @@
 ; Jet-Pac  :  NuLA refuel
 ;  Mockup start-up logo
 
-LOGO_ADDR=&1C00
+LOGO_ADDR=&2000
 
 {
 .LOGOSTART:
@@ -92,4 +92,5 @@ LOGO_ADDR=&1C00
     PRINT "Logo size:", LOGOEND-LOGOSTART
 }
 
-PUTFILE "bin/logo.bin","JetPic",&1C00,&1C00
+PUTFILE "bin/logo.bin","JetPic",LOGO_ADDR,LOGO_ADDR
+
