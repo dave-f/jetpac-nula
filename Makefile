@@ -53,6 +53,12 @@ gfx:
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(reverse-graphic \"bin/manlegs-r6.bin\" \"bin/manlegs-r6.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien1.bin\" \"bin/alien1.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien2.bin\" \"bin/alien2.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien3.bin\" \"bin/alien3.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien4.bin\" \"bin/alien4.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien5.bin\" \"bin/alien5.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien6.bin\" \"bin/alien6.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien7.bin\" \"bin/alien7.bbc\")"
+	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(remap-alien-colours \"bin/alien8.bin\" \"bin/alien8.bbc\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(create-new-alien-colour-tables \"bin/aliencol.bin\")"
 	$(EMACS) -batch -Q --eval="(package-initialize)" -l repack.el --eval="(set-colour \"bin/game.pal\" 0 12 20 30)"
 	$(CP) bin\game.pal.new bin\game.pal
@@ -98,8 +104,13 @@ gfx:
 	$(SNAP) bin/jet-pac-nula bin/aliencol.bin 1056
 #   Location of first alien
 	$(SNAP) bin/jet-pac-nula bin/alien1.bbc 12032
-#   Location of second alien, 64 bytes on
 	$(SNAP) bin/jet-pac-nula bin/alien2.bbc 12096
+	$(SNAP) bin/jet-pac-nula bin/alien3.bbc 12160
+	$(SNAP) bin/jet-pac-nula bin/alien4.bbc 12224
+	$(SNAP) bin/jet-pac-nula bin/alien5.bbc 12288
+	$(SNAP) bin/jet-pac-nula bin/alien6.bbc 12352
+	$(SNAP) bin/jet-pac-nula bin/alien7.bbc 12416
+	$(SNAP) bin/jet-pac-nula bin/alien8.bbc 12480
 
 clean:
 	$(RM) $(OUTPUT_SSD)
