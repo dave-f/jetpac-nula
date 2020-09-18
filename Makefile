@@ -104,9 +104,9 @@ gfx:
 	$(SNAP) bin/jet-pac-nula bin/aliencol.bin 1056
 #   Location of first alien
 	$(SNAP) bin/jet-pac-nula bin/alien1.bbc 12032
-	$(SNAP) bin/jet-pac-nula bin/alien2.bbc 12096
+	$(SNAP) bin/jet-pac-nula bin/alien4.bbc 12096
 	$(SNAP) bin/jet-pac-nula bin/alien3.bbc 12160
-	$(SNAP) bin/jet-pac-nula bin/alien4.bbc 12224
+	$(SNAP) bin/jet-pac-nula bin/alien2.bbc 12224
 	$(SNAP) bin/jet-pac-nula bin/alien5.bbc 12288
 	$(SNAP) bin/jet-pac-nula bin/alien6.bbc 12352
 	$(SNAP) bin/jet-pac-nula bin/alien7.bbc 12416
