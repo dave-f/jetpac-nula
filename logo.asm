@@ -14,7 +14,7 @@ LOGO_ADDR=&2000
     STA &70
     LDA #HI(LOGO_ADDR)
     STA &71
-    LDY #127 ; bottom line first
+    LDY #50
 
 .DAVELOOP:
     TYA
@@ -38,7 +38,7 @@ LOGO_ADDR=&2000
 
 .SKIPA:
     DEY
-    CPY #(127-56)
+    CPY #(50-36)
     BNE DAVELOOP
 
 .END:

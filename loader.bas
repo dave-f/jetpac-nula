@@ -1,4 +1,4 @@
-REM  ** Jet-Pac : NuLA refuel **
+REM * Jet-Pac : NuLA refuel v1.0 *
 REM Dave Footitt & Chris Hogg 2020
 REM
 MODE7
@@ -13,24 +13,27 @@ E%=FNTM(5)
 *FX19
 G%=FNTM(5)
 NULA%=E%/G%>0.75
+IF NULA% GOTO 17 ELSE MODE7:PRINT '"No NuLA detected!"':GOTO 26
 MODE2
-REM VDU 23;8202;0;0;0
+VDU 23,1,0;0;0;
 *FX4,2
 PROCPAL
 *LOAD JETPIC
 *LOAD LOGO
 CALL &900
-REM VDU 23;8202;0;0;0
+VDU 23,1,1;0;0;0;
+COLOUR11:PRINTTAB(0,7)"     NuLA ReFuel"'':COLOUR 3
 *FX15
-INPUT TAB(0,18) "Lives (1-99)",LIVES%
+INPUT "Lives (1-99)",LIVES%
 PRINT "A/S keys (Y/N)?";
 *FX15
 A$=GET$
-IF A$<>"Y" AND A$<>"y" AND A$<>"N" AND A$<>"n" GOTO 27 : REM !!!!!!
+IF A$<>"Y" AND A$<>"y" AND A$<>"N" AND A$<>"n" GOTO 29
 IF A$="Y" OR A$="y" THEN PRINT "Yes" ELSE PRINT "No"
 ?&70 = FNCLAMP(LIVES%)
 IF A$="Y" OR A$="y" THEN ?&71=1 ELSE ?&71=0
 IF NULA% ?&72=1 ELSE ?&72=0
+IF NULA% ?&FE22=&40
 MODE 7
 PRINT "Loading..."
 CLOSE #0
@@ -41,7 +44,7 @@ NEXT:T%=TIME:=T%
 DEFFNCLAMP(N%):IF N%<1 THEN N%=1 ELSE IF N%>99 THEN N%=99
 =N%
 DEFPROCPAL
-?&FE23=&0  : ?&FE23=&0
+?&FE23=&00 : ?&FE23=&00
 ?&FE23=&19 : ?&FE23=&16
 ?&FE23=&2D : ?&FE23=&8C
 ?&FE23=&3C : ?&FE23=&CC
@@ -55,6 +58,6 @@ DEFPROCPAL
 ?&FE23=&BC : ?&FE23=&61
 ?&FE23=&CE : ?&FE23=&A1
 ?&FE23=&DF : ?&FE23=&C5
-?&FE23=&E0 : ?&FE23=&0
-?&FE23=&F0 : ?&FE23=&0
+?&FE23=&E0 : ?&FE23=&00
+?&FE23=&F0 : ?&FE23=&00
 ENDPROC
