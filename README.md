@@ -27,4 +27,4 @@ Edit the `makefile` to point at the tools detailed above and running `make gfx` 
 
 # Thanks
 
-Many thanks to Chris Hogg for the artwork.
+Many thanks to Chris Hogg for the artwork, and Tom Seddon for the NuLA detection code.
