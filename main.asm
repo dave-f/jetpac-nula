@@ -16,6 +16,8 @@ ENABLE_NULA_ADDRESS = &2EA ; Enable function at OSFILE control block workspace
 DISABLE_NULA_ADDRESS = &100+&20 ; Disable function after the palette
 STACK_TOP = &12F
 STACK_DATA = LOAD_ADDRESS + &2900
+OSBYTE = &FFF4
+VECTAB = &FFB7
 
 .START:
     ; Check to see if we are using the NuLA version
@@ -50,7 +52,7 @@ STACK_DATA = LOAD_ADDRESS + &2900
 
     ; Check to see if we are remapping keys
     LDA &71
-    BEQ LIVES
+    BEQ OS_PATCH
 
     ; Patch the game to use A/S keys
     LDA #&AE
@@ -62,11 +64,58 @@ STACK_DATA = LOAD_ADDRESS + &2900
     STA &3EFE
     STA &3DA5
 
+    ; Patch for OS higher than 1.2 if needed
+.OS_PATCH:
+    LDA #0
+    LDX #1
+    JSR OSBYTE 
+    CPX #1
+    BEQ	LIVES
+    LDA VECTAB
+    STA	&73
+    LDA VECTAB+1
+    STA &74
+    LDY #&0E
+    LDA (&73),Y
+    STA &3025
+    STA &3034
+    STA &303A
+    INY
+    LDA (&73),Y
+    STA &302A
+    STA &3035
+    STA &303B
+    LDY #&20
+    LDA (&73),Y
+    STA &4860
+    INY
+    LDA (&73),Y
+    STA &4865
+    LDA &FFB7
+    STA &5904
+    LDA &FFB8
+    STA &5905
+    LDY #&A
+    LDA (&73),Y
+    STA &3D91
+    STA &3D9A
+    STA &3DB1
+    STA &3DCE
+    STA &3DE3
+    INY
+    LDA (&73),Y
+    STA &3D92
+    STA &3D9B
+    STA &3DB2
+    STA &3DCF
+    STA &3DE4			
+
     ; Give us 99 lives, for player 1 and player 2.
 .LIVES:
     LDA #&99
     STA &307B
     STA &308C
+
 
     ; Jump straight to game if we are not on NuLA
     LDA &72
