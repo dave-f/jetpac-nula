@@ -4,7 +4,7 @@
 ORG &900
 INCLUDE "logo.asm"
 .LOGOEND:
-SAVE "logo",&900,LOGOEND
+SAVE "JetLogo",&900,LOGOEND
 CLEAR &900,LOGOEND
 
 ORG &1900
@@ -70,7 +70,7 @@ VECTAB = &FFB7
     LDX #1
     JSR OSBYTE 
     CPX #1
-    BEQ	LIVES
+    BEQ	FONT
     LDA VECTAB
     STA	&73
     LDA VECTAB+1
@@ -108,7 +108,46 @@ VECTAB = &FFB7
     STA &3D9B
     STA &3DB2
     STA &3DCF
-    STA &3DE4			
+    STA &3DE4
+
+    ; Change font definition for characters 0-9
+.FONT:
+    LDA &72
+    BEQ LIVES
+    CPX #3     ; Use result of OS test above
+    BCS MFONT
+ 
+    ; B/B+ - change font page for chars 224-255 
+    LDA #3
+    STA &36E
+    JMP FONTPATCH
+
+    ; Master - copy font to ANDY	
+.MFONT:
+    SEI
+    LDA &FE30
+    PHA
+    ORA #&80
+    STA &FE30
+    LDX #0
+
+.MFONTLP:
+    LDA &380,X
+    STA &8F80,X
+    INX
+    CPX #80
+    BNE MFONTLP
+    PLA 
+    STA &FE30 	 
+    CLI	
+
+    ; Patch game to use chars &F0-&F9 rather than &30-&39  
+.FONTPATCH:
+    LDA #&F0
+    STA &340B 
+    STA &3414
+    STA &4700
+    STA &4708
 
     ; Give us 99 lives, for player 1 and player 2.
 .LIVES:
@@ -279,5 +318,6 @@ VECTAB = &FFB7
 
     PUTFILE "org/jet-pac","JetPac",&2000,&5900
     PUTFILE "bin/jet-pac-nula","JetNla",&2000,&5900
+    PUTFILE "res/font.dat","JetFont",&380,&380
     PUTBASIC "loader.bas","Loader"
     SAVE "JetNula",START,END

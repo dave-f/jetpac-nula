@@ -1,4 +1,4 @@
-REM * Jet-Pac : NuLA refuel v1.1 *
+REM * Jet-Pac : NuLA refuel v1.2 *
 REM Dave Footitt & Chris Hogg 2020
 REM
 MODE7
@@ -13,13 +13,14 @@ E%=FNTM(5)
 *FX19
 G%=FNTM(5)
 NULA%=E%/G%>0.75
-IF NULA% GOTO 17 ELSE MODE7:PRINT '"No NuLA detected!"':GOTO 26
+IF NULA% GOTO 17 ELSE MODE7:PRINT '"No NuLA detected!"':GOTO 27
 MODE2
 VDU 23,1,0;0;0;
 *FX4,1
 PROCPAL
+*LOAD JETFONT
 *LOAD JETPIC
-*LOAD LOGO
+*LOAD JETLOGO
 CALL &900
 VDU 23,1,1;0;0;0;
 COLOUR11:PRINTTAB(0,7)"     NuLA ReFuel"'':COLOUR 3
@@ -28,7 +29,7 @@ INPUT "Lives (1-99)",LIVES%
 PRINT "A/S keys (Y/N)?";
 *FX15
 A$=GET$
-IF A$<>"Y" AND A$<>"y" AND A$<>"N" AND A$<>"n" GOTO 29
+IF A$<>"Y" AND A$<>"y" AND A$<>"N" AND A$<>"n" GOTO 30
 IF A$="Y" OR A$="y" THEN PRINT "Yes" ELSE PRINT "No"
 ?&70 = FNCLAMP(LIVES%)
 IF A$="Y" OR A$="y" THEN ?&71=1 ELSE ?&71=0
