@@ -7,8 +7,11 @@ A VideoNuLA version of the classic BBC Micro game.  Features reworked graphics f
 * Platforms
 * Items
 * Aliens
+* Score/Lives font
 
 The rockets are left alone because I felt these were so iconic to the game.
+
+![Screenshot](screenshot.png)
 
 # Tools required
 
