@@ -27,6 +27,6 @@ Edit the `makefile` to point at the tools detailed above and running `make gfx` 
 
 # Thanks
 
-Chris Hogg - Art
-Rob Coleman - NuLA hardware, new score font and Master support
-Tom Seddon - NuLA detection code
+Chris Hogg - Art  
+Rob Coleman - NuLA hardware, new score font and Master support  
+Tom Seddon - NuLA detection code  
