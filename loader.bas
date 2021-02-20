@@ -1,4 +1,4 @@
-REM * Jet-Pac : NuLA refuel v1.2 *
+REM * Jet-Pac : NuLA refuel v1.3 *
 REM Dave Footitt & Chris Hogg 2020
 REM
 MODE7
