@@ -2,18 +2,24 @@ REM * Jet-Pac : NuLA refuel v1.2 *
 REM Dave Footitt & Chris Hogg 2020
 REM
 MODE7
+DIM REGS 4
+A%=234
+X%=0
+Y%=0
+!REGS = USR &FFF4
+IF REGS?1 <> 0 PRINT '"Not compatible with TUBE":END
 *FX200,3
-?&FE00=8:?&FE01=&30
+VDU23,0,8,&30,0;0;0;
 *FX9
 *FX10
-?&FE20=&10
+*FX151,32,16
 *FX19
-E%=FNTM(5)
-?&FE22=&44
+E%=FNTM
+*FX151,34,68
 *FX19
-G%=FNTM(5)
+G%=FNTM
 NULA%=E%/G%>0.75
-IF NULA% GOTO 17 ELSE MODE7:PRINT '"No NuLA detected!"':GOTO 27
+IF NULA% GOTO 23 ELSE MODE7:PRINT '"No NuLA detected!"':GOTO 33
 MODE2
 VDU 23,1,0;0;0;
 *FX4,1
@@ -29,7 +35,7 @@ INPUT "Lives (1-99)",LIVES%
 PRINT "A/S keys (Y/N)?";
 *FX15
 A$=GET$
-IF A$<>"Y" AND A$<>"y" AND A$<>"N" AND A$<>"n" GOTO 30
+IF A$<>"Y" AND A$<>"y" AND A$<>"N" AND A$<>"n" GOTO 36
 IF A$="Y" OR A$="y" THEN PRINT "Yes" ELSE PRINT "No"
 ?&70 = FNCLAMP(LIVES%)
 IF A$="Y" OR A$="y" THEN ?&71=1 ELSE ?&71=0
@@ -40,7 +46,7 @@ PRINT "Loading..."
 CLOSE #0
 *RUN JetNula
 END
-DEFFNTM(N%):LOCALI%,T%:TIME=0:FORI%=1TON%:*FX19
+DEFFNTM:LOCALI%,T%:TIME=0:FORI%=1TO5:*FX19
 NEXT:T%=TIME:=T%
 DEFFNCLAMP(N%):IF N%<1 THEN N%=1 ELSE IF N%>99 THEN N%=99
 =N%
