@@ -36,7 +36,7 @@
   (let* ((file-bytes (string-to-list (f-read-bytes filename))))
     (message "length %d" (length file-bytes))
     (cl-loop for i from 0 to (1- (length file-bytes)) by 2 do
-             (insert (format "?&FE23=&%X : ?&FE23=&%X\n" (nth i file-bytes) (nth (1+ i) file-bytes))))))
+             (insert (format "?&FE23=&%02X : ?&FE23=&%02X\n" (nth i file-bytes) (nth (1+ i) file-bytes))))))
 
 (defun show-alien-colours ()
   (interactive)
