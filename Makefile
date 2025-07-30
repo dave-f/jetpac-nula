@@ -3,9 +3,9 @@
 #
 
 BEEBEM       := C:/Dave/b2/b2_Debug
-PNG2BBC      := ../png2bbc/Release/png2bbc.exe
-EMACS        := c:/Dave/Emacs-27.1/bin/emacs.exe
-SNAP         := ../snap/Release/snap.exe
+PNG2BBC      := ../png2bbc/png2bbc.exe
+EMACS        := c:/Dave/Emacs-30.1/bin/emacs.exe
+SNAP         := ../snap/snap.exe
 BEEBEM_FLAGS := -b -0
 BEEBASM      := ../beebasm/beebasm.exe
 GAME_SSD     := res/blank.ssd
